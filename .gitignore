@@ -57,3 +57,17 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+/QuizMasterWeb/nbproject/private/
+/QuizMasterWeb/build/
+/QuizMasterEE/nbproject/private/
+/QuizMasterEE/QuizMasterEE-war/nbproject/private/
+/QuizMasterEE/QuizMasterEE-ejb/nbproject/private/
+/QuizMasterEE/QuizMasterEE-war/build/
+/QuizMasterEE/QuizMasterEE-ejb/build/
+/QuizMasterEE/QuizMasterEE-ejb/dist/
+/QuizMasterEE/build/
+/QuizMasterEE/QuizMasterEE-war/dist/
+/QuizMasterEE/dist/
+/QuizMaster-WEB/nbproject/private/
+/QuizMaster-WEB/build/
+/QuizMaster-WEB/dist/
