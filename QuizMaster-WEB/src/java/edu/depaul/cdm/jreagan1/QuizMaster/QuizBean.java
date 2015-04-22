@@ -7,6 +7,7 @@ package edu.depaul.cdm.jreagan1.QuizMaster;
 
 import java.io.Serializable;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,6 +36,20 @@ public class QuizBean implements Serializable {
     @PersistenceContext(unitName = "QuizMaster-WEBPU")
     private EntityManager entityManager;
 
+    private Quiz lastBuiltQuiz;
+
+    public Quiz getLastBuiltQuiz() {
+        return lastBuiltQuiz;
+    }
+
+    public void setLastBuiltQuiz(Quiz lastBuiltQuiz) {
+        this.lastBuiltQuiz = lastBuiltQuiz;
+    }
+    
+    public QuizBean() {
+       // lastBuiltQuiz = entityManager.find(Quiz.class, new Long(1));
+    }
+    
     
     @Transactional
     public List<Quiz> GetAllQuizzes() throws SQLException  {
@@ -48,38 +63,48 @@ public class QuizBean implements Serializable {
     @Transactional
     public String addAQuestionToQuiz1() {
         
-        
-        
-      // Quiz q1 = entityManager.find(Quiz.class, new Long(1));
-        //entityManager.getTransaction().commit();
-//        Question question = new Question();
-//        question.setQuestionText("What was the name of the captial city of the Roman empire?");
-//        question.setQuiz(q1);
-//        question.setId(new Long(1));
-//        Answer a = new Answer();
-//        
-//        a.setQuestion(question);
-//        a.setAnswerText("Answer Text");
-//        q1.addQuestion(question);
-//        //entityManager.getTransaction().begin();
-        //entityManager.persist(question);
-        //entityManager.getTransaction().commit();
-        
-        //entityManager.getTransaction().begin();
-       
-      // q1.setQuizName("UPDATERD");
-      //  entityManager.persist(q1);
-        
+
         Quiz q3 = new Quiz();
-        //q3.setId(new Long(3));
         q3.setQuizName("QUIZ3 BABY");
-        //entityManager.getTransaction().commit();
-       // this.addAQuestionToQuiz1(q1);
         entityManager.persist(q3);
         return q3.toString();
-  
 
     } 
+    
+    @Transactional
+    public String setupHistoryQuiz() {
+        
+        Quiz quiz1 = entityManager.find(Quiz.class, new Long(1));
+        
+        List<Question> questions = new ArrayList<Question>();
+        
+        for(int i = 0; i < 5; i++) {
+            Question q1 = new Question();
+            q1.setQuiz(quiz1);
+            q1.setQuestionText("Who killed the radio star? --" + i + "--");
+            List<Answer> answers = new ArrayList<Answer>();
+            for(int j = 0; j < 3; j++) {
+                
+                
+                Answer ans = new Answer();
+                ans.setQuestion(q1);
+                ans.setAnswerText("Video --" + j + "--" );
+                answers.add(ans);
+                
+                
+            }
+            q1.setAnswers(answers);
+            
+            questions.add(q1);
+        }
+        
+        quiz1.setQuestions(questions);
+        
+        entityManager.persist(quiz1);
+        
+        this.setLastBuiltQuiz(quiz1);
+        return quiz1.toString();
+    }
     
     public void AddQuestion(int quizID, Question question) {
         

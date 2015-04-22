@@ -6,31 +6,25 @@
 package edu.depaul.cdm.jreagan1.QuizMaster;
 
 import java.io.Serializable;
-import java.util.List;
-import javax.persistence.CascadeType;
-import static javax.persistence.CascadeType.PERSIST;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
 /**
  *
- * @author johnreagan
+ * @author John
  */
 @Entity
-public class Quiz implements Serializable {
+public class Player implements Serializable {
     private static final long serialVersionUID = 1L;
-    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    @OneToMany(mappedBy="quiz", cascade=CascadeType.PERSIST)
-    private List<Question> questions;
     
-    private String quizName;
+    @Column(name="player_name")
+    private String name;
     
     public Long getId() {
         return id;
@@ -40,39 +34,15 @@ public class Quiz implements Serializable {
         this.id = id;
     }
 
-    /**
-     * Get the value of Questions
-     *
-     * @return the value of Questions
-     */
-    public List<Question> getQuestions() {
-        return questions;
+    public String getName() {
+        return name;
     }
 
-    /**
-     * Set the value of Questions
-     *
-     * @param Questions new value of Questions
-     */
-    public void setQuestions(List<Question> Questions) {
-        this.questions = Questions;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getQuizName() {
-        return quizName;
-    }
-
-    public void setQuizName(String quizName) {
-        this.quizName = quizName;
-    }
     
-//    public void addQuestion(Question q) {
-//        this.questions.add(q);
-//    }
-//    
-//    public void removeQuestion(Question q) {
-//        this.questions.remove(q);
-//    }
     
     @Override
     public int hashCode() {
@@ -84,10 +54,10 @@ public class Quiz implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Quiz)) {
+        if (!(object instanceof Player)) {
             return false;
         }
-        Quiz other = (Quiz) object;
+        Player other = (Player) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -96,7 +66,7 @@ public class Quiz implements Serializable {
 
     @Override
     public String toString() {
-        return "edu.depaul.cdm.jreagan1.QuizMaster.Quiz[ id=" + id + " ]";
+        return "edu.depaul.cdm.jreagan1.QuizMaster.Player[ id=" + id + " ]";
     }
     
 }

@@ -7,6 +7,7 @@ package edu.depaul.cdm.jreagan1.QuizMaster;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -43,8 +44,7 @@ public class Question implements Serializable {
     @Column(name="question_text")
     private String questionText;
     
-    @OneToMany
-    (mappedBy="question")
+    @OneToMany(mappedBy="question", cascade=CascadeType.PERSIST)
     private List<Answer> answers;
     
     @OneToOne
