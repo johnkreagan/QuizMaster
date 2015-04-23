@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="java.edu.depaul.cdm.jreagan1.QuizMaster">
+  <ClassDiagramComponents>
+    <Class name="Answer" package="edu.depaul.cdm.jreagan1.QuizMaster" visibility="public" xPosition="20.0" yPosition="20.0">
+      <Fields>
+        <Field name="serialVersionUID" type="long" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="id" type="Long" visibility="private"/>
+        <Field name="question" type="Question" visibility="private"/>
+        <Field name="answerText" type="String" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="getId" returnType="Long" visibility="public"/>
+        <Method name="setId" returnType="void" visibility="public">
+          <Argument type="Long" name="id"/>
+        </Method>
+        <Method name="getAnswerText" returnType="String" visibility="public"/>
+        <Method name="setAnswerText" returnType="void" visibility="public">
+          <Argument type="String" name="answerText"/>
+        </Method>
+        <Method name="getQuestion" returnType="Question" visibility="public"/>
+        <Method name="setQuestion" returnType="void" visibility="public">
+          <Argument type="Question" name="question"/>
+        </Method>
+        <Method name="hashCode" returnType="int" visibility="public"/>
+        <Method name="equals" returnType="boolean" visibility="public">
+          <Argument type="Object" name="object"/>
+        </Method>
+        <Method name="toString" returnType="String" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Player" package="edu.depaul.cdm.jreagan1.QuizMaster" visibility="public" xPosition="320.0" yPosition="20.0">
+      <Fields>
+        <Field name="serialVersionUID" type="long" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="id" type="Long" visibility="private"/>
+        <Field name="name" type="String" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="getId" returnType="Long" visibility="public"/>
+        <Method name="setId" returnType="void" visibility="public">
+          <Argument type="Long" name="id"/>
+        </Method>
+        <Method name="getName" returnType="String" visibility="public"/>
+        <Method name="setName" returnType="void" visibility="public">
+          <Argument type="String" name="name"/>
+        </Method>
+        <Method name="hashCode" returnType="int" visibility="public"/>
+        <Method name="equals" returnType="boolean" visibility="public">
+          <Argument type="Object" name="object"/>
+        </Method>
+        <Method name="toString" returnType="String" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Question" package="edu.depaul.cdm.jreagan1.QuizMaster" visibility="public" xPosition="620.0" yPosition="20.0">
+      <Fields>
+        <Field name="serialVersionUID" type="long" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="id" type="Long" visibility="private"/>
+        <Field name="quiz" type="Quiz" visibility="private"/>
+        <Field name="questionText" type="String" visibility="private"/>
+        <Field name="answers" type="List&lt;Answer&gt;" visibility="private"/>
+        <Field name="correctAnswer" type="Answer" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="getId" returnType="Long" visibility="public"/>
+        <Method name="setId" returnType="void" visibility="public">
+          <Argument type="Long" name="id"/>
+        </Method>
+        <Method name="getQuiz" returnType="Quiz" visibility="public"/>
+        <Method name="setQuiz" returnType="void" visibility="public">
+          <Argument type="Quiz" name="quiz"/>
+        </Method>
+        <Method name="getQuestionText" returnType="String" visibility="public"/>
+        <Method name="setQuestionText" returnType="void" visibility="public">
+          <Argument type="String" name="text"/>
+        </Method>
+        <Method name="getAnswers" returnType="List&lt;Answer&gt;" visibility="public"/>
+        <Method name="setAnswers" returnType="void" visibility="public">
+          <Argument type="List&lt;Answer&gt;" name="answers"/>
+        </Method>
+        <Method name="getCorrectAnswer" returnType="Answer" visibility="public"/>
+        <Method name="setCorrectAnswer" returnType="void" visibility="public">
+          <Argument type="Answer" name="correctAnswer"/>
+        </Method>
+        <Method name="hashCode" returnType="int" visibility="public"/>
+        <Method name="equals" returnType="boolean" visibility="public">
+          <Argument type="Object" name="object"/>
+        </Method>
+        <Method name="toString" returnType="String" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Quiz" package="edu.depaul.cdm.jreagan1.QuizMaster" visibility="public" xPosition="920.0" yPosition="20.0">
+      <Fields>
+        <Field name="serialVersionUID" type="long" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="id" type="Long" visibility="private"/>
+        <Field name="questions" type="List&lt;Question&gt;" visibility="private"/>
+        <Field name="quizName" type="String" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="getId" returnType="Long" visibility="public"/>
+        <Method name="setId" returnType="void" visibility="public">
+          <Argument type="Long" name="id"/>
+        </Method>
+        <Method name="getQuestions" returnType="List&lt;Question&gt;" visibility="public"/>
+        <Method name="setQuestions" returnType="void" visibility="public">
+          <Argument type="List&lt;Question&gt;" name="Questions"/>
+        </Method>
+        <Method name="getQuizName" returnType="String" visibility="public"/>
+        <Method name="setQuizName" returnType="void" visibility="public">
+          <Argument type="String" name="quizName"/>
+        </Method>
+        <Method name="hashCode" returnType="int" visibility="public"/>
+        <Method name="equals" returnType="boolean" visibility="public">
+          <Argument type="Object" name="object"/>
+        </Method>
+        <Method name="toString" returnType="String" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="QuizBean" package="edu.depaul.cdm.jreagan1.QuizMaster" visibility="public" xPosition="1220.0" yPosition="20.0">
+      <Fields>
+        <Field name="logger" type="Logger" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="entityManager" type="EntityManager" visibility="private"/>
+        <Field name="lastBuiltQuiz" type="Quiz" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getLastBuiltQuiz" returnType="Quiz" visibility="public"/>
+        <Method name="setLastBuiltQuiz" returnType="void" visibility="public">
+          <Argument type="Quiz" name="lastBuiltQuiz"/>
+        </Method>
+        <Method name="GetAllQuizzes" returnType="List&lt;Quiz&gt;" visibility="public"/>
+        <Method name="addAQuestionToQuiz1" returnType="String" visibility="public"/>
+        <Method name="setupHistoryQuiz" returnType="String" visibility="public"/>
+        <Method name="AddQuestion" returnType="void" visibility="public">
+          <Argument type="int" name="quizID"/>
+          <Argument type="Question" name="question"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="QuizMatch" package="edu.depaul.cdm.jreagan1.QuizMaster" visibility="public" xPosition="1520.0" yPosition="20.0">
+      <Fields>
+        <Field name="serialVersionUID" type="long" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="id" type="Long" visibility="private"/>
+        <Field name="player" type="Player" visibility="private"/>
+        <Field name="quiz" type="Quiz" visibility="private"/>
+        <Field name="answers" type="List&lt;Answer&gt;" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="getId" returnType="Long" visibility="public"/>
+        <Method name="setId" returnType="void" visibility="public">
+          <Argument type="Long" name="id"/>
+        </Method>
+        <Method name="getPlayer" returnType="Player" visibility="public"/>
+        <Method name="setPlayer" returnType="void" visibility="public">
+          <Argument type="Player" name="player"/>
+        </Method>
+        <Method name="getQuiz" returnType="Quiz" visibility="public"/>
+        <Method name="setQuiz" returnType="void" visibility="public">
+          <Argument type="Quiz" name="quiz"/>
+        </Method>
+        <Method name="getAnswers" returnType="List&lt;Answer&gt;" visibility="public"/>
+        <Method name="setAnswers" returnType="void" visibility="public">
+          <Argument type="List&lt;Answer&gt;" name="answers"/>
+        </Method>
+        <Method name="hashCode" returnType="int" visibility="public"/>
+        <Method name="equals" returnType="boolean" visibility="public">
+          <Argument type="Object" name="object"/>
+        </Method>
+        <Method name="toString" returnType="String" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="User" package="edu.depaul.cdm.jreagan1.QuizMaster" visibility="public" xPosition="1820.0" yPosition="20.0">
+      <Fields>
+        <Field name="id" type="Long" visibility="private"/>
+        <Field name="username" type="String" visibility="private"/>
+        <Field name="password" type="String" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="getId" returnType="Long" visibility="public"/>
+        <Method name="setId" returnType="void" visibility="public">
+          <Argument type="Long" name="id"/>
+        </Method>
+        <Method name="getUsername" returnType="String" visibility="public"/>
+        <Method name="setUsername" returnType="void" visibility="public">
+          <Argument type="String" name="username"/>
+        </Method>
+        <Method name="getPassword" returnType="String" visibility="public"/>
+        <Method name="setPassword" returnType="void" visibility="public">
+          <Argument type="String" name="password"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="UserBean" package="edu.depaul.cdm.jreagan1.QuizMaster" visibility="public" xPosition="2120.0" yPosition="20.0">
+      <Fields>
+        <Field name="logger" type="Logger" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="entityManager" type="EntityManager" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="getUserList" returnType="List&lt;User&gt;" visibility="public"/>
+      </Methods>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <UseRelation source="edu.depaul.cdm.jreagan1.QuizMaster.QuizMatch" target="edu.depaul.cdm.jreagan1.QuizMaster.Quiz" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="edu.depaul.cdm.jreagan1.QuizMaster.UserBean" target="edu.depaul.cdm.jreagan1.QuizMaster.User" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="answers" source="edu.depaul.cdm.jreagan1.QuizMaster.QuizMatch" target="edu.depaul.cdm.jreagan1.QuizMaster.Answer" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="List&lt;Answer&gt;"/>
+    <HasRelation name="question" source="edu.depaul.cdm.jreagan1.QuizMaster.Answer" target="edu.depaul.cdm.jreagan1.QuizMaster.Question" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="edu.depaul.cdm.jreagan1.QuizMaster.Question" target="edu.depaul.cdm.jreagan1.QuizMaster.Answer" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="edu.depaul.cdm.jreagan1.QuizMaster.QuizBean" target="edu.depaul.cdm.jreagan1.QuizMaster.Question" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="edu.depaul.cdm.jreagan1.QuizMaster.QuizMatch" target="edu.depaul.cdm.jreagan1.QuizMaster.Answer" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="quiz" source="edu.depaul.cdm.jreagan1.QuizMaster.QuizMatch" target="edu.depaul.cdm.jreagan1.QuizMaster.Quiz" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="quiz" source="edu.depaul.cdm.jreagan1.QuizMaster.Question" target="edu.depaul.cdm.jreagan1.QuizMaster.Quiz" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="edu.depaul.cdm.jreagan1.QuizMaster.QuizMatch" target="edu.depaul.cdm.jreagan1.QuizMaster.Player" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="questions" source="edu.depaul.cdm.jreagan1.QuizMaster.Quiz" target="edu.depaul.cdm.jreagan1.QuizMaster.Question" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="List&lt;Question&gt;"/>
+    <HasRelation name="player" source="edu.depaul.cdm.jreagan1.QuizMaster.QuizMatch" target="edu.depaul.cdm.jreagan1.QuizMaster.Player" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="lastBuiltQuiz" source="edu.depaul.cdm.jreagan1.QuizMaster.QuizBean" target="edu.depaul.cdm.jreagan1.QuizMaster.Quiz" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="edu.depaul.cdm.jreagan1.QuizMaster.Answer" target="edu.depaul.cdm.jreagan1.QuizMaster.Question" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="answers" source="edu.depaul.cdm.jreagan1.QuizMaster.Question" target="edu.depaul.cdm.jreagan1.QuizMaster.Answer" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="List&lt;Answer&gt;"/>
+    <UseRelation source="edu.depaul.cdm.jreagan1.QuizMaster.Quiz" target="edu.depaul.cdm.jreagan1.QuizMaster.Question" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="edu.depaul.cdm.jreagan1.QuizMaster.QuizBean" target="edu.depaul.cdm.jreagan1.QuizMaster.Quiz" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="edu.depaul.cdm.jreagan1.QuizMaster.Question" target="edu.depaul.cdm.jreagan1.QuizMaster.Quiz" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="correctAnswer" source="edu.depaul.cdm.jreagan1.QuizMaster.Question" target="edu.depaul.cdm.jreagan1.QuizMaster.Answer" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+  </ClassDiagramRelations>
+</ClassDiagram>
