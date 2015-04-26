@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.depaul.cdm.jreagan1.QuizMaster;
+package edu.depaul.cdm.QuizMaster;
 
 import java.io.Serializable;
 import java.sql.SQLException;
@@ -11,7 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.Remote;
+import javax.ejb.Local;
+import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.enterprise.context.SessionScoped;
@@ -28,9 +29,9 @@ import static javax.transaction.Transactional.TxType.REQUIRED;
  * @author John
  */
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-@SessionScoped
+@Stateless
 @Named
-@Remote
+@Local
 public class QuizBean implements Serializable {
 
    private static final Logger logger = Logger.getLogger(QuizBean.class.getName());
@@ -53,7 +54,7 @@ public class QuizBean implements Serializable {
     }
     
     
-    @Transactional
+    //@Transactional
     public List<Quiz> GetAllQuizzes() throws SQLException  {
         logger.log(Level.INFO, "Pre Fetch all quizzes");
         //entityManager.getTransaction().begin();
@@ -62,7 +63,7 @@ public class QuizBean implements Serializable {
         
     }
     
-    @Transactional
+    //@Transactional
     public String addAQuestionToQuiz1() {
         
 
@@ -73,7 +74,7 @@ public class QuizBean implements Serializable {
 
     } 
     
-    @Transactional
+    //@Transactional
     public String setupHistoryQuiz() {
         
         Quiz quiz1 = entityManager.find(Quiz.class, new Long(1));

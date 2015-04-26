@@ -71,3 +71,6 @@ $RECYCLE.BIN/
 /QuizMaster-WEB/nbproject/private/
 /QuizMaster-WEB/build/
 /QuizMaster-WEB/dist/
+/maven/QuizMaster/QuizMaster-ejb/target/
+/maven/QuizMaster/QuizMaster-web/target/
+/maven/QuizMaster/QuizMaster-ear/target/
