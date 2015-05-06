@@ -20,6 +20,7 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.transaction.Transaction;
 import javax.transaction.Transactional;
 import static javax.transaction.Transactional.TxType.REQUIRED;
@@ -77,36 +78,50 @@ public class QuizBean implements Serializable {
     //@Transactional
     public String setupHistoryQuiz() {
         
-        Quiz quiz1 = entityManager.find(Quiz.class, new Long(1));
-        
-        List<Question> questions = new ArrayList<Question>();
-        
-        for(int i = 0; i < 5; i++) {
-            Question q1 = new Question();
-            q1.setQuiz(quiz1);
-            q1.setQuestionText("Who killed the radio star? --" + i + "--");
-            List<Answer> answers = new ArrayList<Answer>();
-            for(int j = 0; j < 3; j++) {
-                
-                
-                Answer ans = new Answer();
-                ans.setQuestion(q1);
-                ans.setAnswerText("Video --" + j + "--" );
-                answers.add(ans);
-                
-                
-            }
-            q1.setAnswers(answers);
+        try {
+            logger.log(Level.INFO, "Pre findallquizzes");
+            List<Quiz> quizzes = entityManager.createNamedQuery("findAllQuizzes").getResultList();
+            logger.log(Level.INFO, "Quizzes size = " + quizzes.size());
+            for (Quiz quiz1 : quizzes) {
+                    quiz1.getQuestions().clear();
+
+                    List<Question> questions = new ArrayList();
+
+                    for(int k = 0; k < 5; k++) {
+                        Question q1 = new Question();
+                        q1.setQuiz(quiz1);
+                        q1.setQuestionText("Who killed the radio star? --" + k + "--");
+                        List<Answer> answers = new ArrayList();
+                        for(int j = 0; j < 3; j++) {
+
+
+                            Answer ans = new Answer();
+                            ans.setQuestion(q1);
+                            ans.setAnswerText("Video --" + j + "--" );
+                            answers.add(ans);
+
+
+                        }
+                        q1.setAnswers(answers);
+
+                        questions.add(q1);
+                    }
+
+                    quiz1.setQuestions(questions);
+
+                    entityManager.persist(quiz1);
+
+                    this.setLastBuiltQuiz(quiz1);
+                }
             
-            questions.add(q1);
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
         }
         
-        quiz1.setQuestions(questions);
         
-        entityManager.persist(quiz1);
+       
         
-        this.setLastBuiltQuiz(quiz1);
-        return quiz1.toString();
+        return "";
     }
     
     public void AddQuestion(int quizID, Question question) {

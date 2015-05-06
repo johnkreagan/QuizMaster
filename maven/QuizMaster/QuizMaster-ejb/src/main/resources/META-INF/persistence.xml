@@ -11,6 +11,7 @@
       <property name="eclipselink.logging.level" value="FINEST"/>
       <property name="javax.persistence.schema-generation.scripts.create-target" value="META-INF/create.sql"/>
       <property name="javax.persistence.schema-generation.scripts.drop-target" value="META-INF/drop.sql"/>
+      <property name="javax.persistence.schema-generation.scripts.action" value="script-then-metadata"/>
     </properties>
   </persistence-unit>
 </persistence>

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.depaul.cdm.servlets;
+package edu.depaul.cdm.servlet;
 
 import edu.depaul.cdm.QuizMaster.QuizBean;
 import java.io.IOException;
@@ -19,11 +19,11 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author John
  */
-@WebServlet(name = "ViewQuiz", urlPatterns = {"/ViewQuiz"})
-public class ViewQuiz extends HttpServlet {
+@WebServlet(name = "AddQuestions", urlPatterns = {"/AddQuestions"})
+public class AddQuestions extends HttpServlet {
 
     @EJB
-    private QuizBean quizBean; 
+    private QuizBean quizBean;
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,17 +42,16 @@ public class ViewQuiz extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ViewQuiz</title>");            
+            out.println("<title>Servlet AddQuestions</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet!!! ViewQuiz at " + request.getContextPath() + "</h1>");
-            try {
-                out.println("<h1>Quizzes:" +quizBean.GetAllQuizzes() + "</h1");
-            } catch(Exception e) {
-                out.println("<h1>Quizzes Exception:" + e.getMessage()+ "</h1");
-            }
+            out.println("<h1>Servlet AddQuestions at " + request.getContextPath() + "</h1>");
             
             
+            quizBean.setupHistoryQuiz();
+            
+            out.println(quizBean.getLastBuiltQuiz());
+            out.println("<a href='ViewAllQuizzes'>View All</a>");
             out.println("</body>");
             out.println("</html>");
         }
