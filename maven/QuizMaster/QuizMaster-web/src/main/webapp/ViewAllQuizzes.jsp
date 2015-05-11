@@ -15,7 +15,6 @@
             for(Quiz q : quizzes) {
             %>
             <li><%@include file="WEB-INF/jspf/QuizSimple.jsp" %></li>
-            <%--<li><%@include file="WEB-INF/jspf/AnswerInputRadio.jsp" %></li>--%>
             <% } %>
         </ul>
 <jsp:include page="WEB-INF/jspf/footer.jsp" />

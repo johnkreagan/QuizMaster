@@ -10,7 +10,8 @@
         for(int j = 0; j < answers.size(); j++) {
             ans = answers.get(j);
             %>
-            <li><%= ans.getAnswerText() %></li>
+            <!-- <li><%= ans.getAnswerText() %></li> -->
+            <li><%@include file="AnswerInputRadio.jsp" %></li>
             <% } %>
     </ol>
 </li>

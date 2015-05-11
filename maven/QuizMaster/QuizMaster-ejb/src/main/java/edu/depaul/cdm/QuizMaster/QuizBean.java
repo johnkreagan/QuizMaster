@@ -82,6 +82,11 @@ public class QuizBean implements Serializable {
             logger.log(Level.INFO, "Pre findallquizzes");
             List<Quiz> quizzes = entityManager.createNamedQuery("findAllQuizzes").getResultList();
             logger.log(Level.INFO, "Quizzes size = " + quizzes.size());
+            if(quizzes.isEmpty()) {
+                Quiz newQuiz = new Quiz();
+                newQuiz.setQuizName("Default Quiz");
+                quizzes.add(newQuiz);
+            }
             for (Quiz quiz1 : quizzes) {
                     quiz1.getQuestions().clear();
 
