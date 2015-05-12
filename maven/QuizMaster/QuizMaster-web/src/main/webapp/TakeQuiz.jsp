@@ -1,23 +1,13 @@
 <%@page import="edu.depaul.cdm.QuizMaster.Quiz"%>
 <%@page import="java.util.List"%>
 <%
-Quiz activeQuiz;
+Quiz activeQuiz = (Quiz)request.getAttribute("activeQuiz");
 
-activeQuiz = q;
-
-
+request.setAttribute("Quiz.QuizSimple.JSP", activeQuiz);
 %>
 <jsp:include page="WEB-INF/jspf/header.jsp" />
         <h1><%= activeQuiz.getQuizName() %></h1>
         <form action="/TakeQuiz" method="POST">
-            <ul>
-            <%
-                List<Quiz> quizzes = (List<Quiz>)request.getAttribute("quizzes");
-
-                for(Quiz q : quizzes) {
-                %>
-                <li><%@include file="WEB-INF/jspf/QuizSimple.jsp" %></li>
-                <% } %>
-            </ul>
+            <%@include file="WEB-INF/jspf/QuizSimple.jsp" %>
         </form>
 <jsp:include page="WEB-INF/jspf/footer.jsp" />

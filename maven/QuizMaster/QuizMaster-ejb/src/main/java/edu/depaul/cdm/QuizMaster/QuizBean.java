@@ -64,16 +64,14 @@ public class QuizBean implements Serializable {
         
     }
     
+    public List<Player> GetAllPlayers() {
+        return entityManager.createQuery("SELECT p FROM Player p").getResultList();
+    }
+    
     //@Transactional
-    public String addAQuestionToQuiz1() {
-        
-
-        Quiz q3 = new Quiz();
-        q3.setQuizName("QUIZ3 BABY");
-        entityManager.persist(q3);
-        return q3.toString();
-
-    } 
+    public Quiz GetQuizByID(long id) {
+        return entityManager.find(Quiz.class, id);
+    }
     
     //@Transactional
     public String setupHistoryQuiz() {
@@ -136,7 +134,18 @@ public class QuizBean implements Serializable {
         
     }
     
+    public QuizMatch StartQuizMatch(Player player, Quiz quiz) {
+        QuizMatch qm = new QuizMatch();
+        qm.setPlayer(player);
+        qm.setQuiz(quiz);
+        entityManager.persist(qm);
+        return qm;
+    }
     
-    
+    public QuizMatch StartQuizMatch(long playerID, long quizID) {
+        Quiz q = entityManager.find(Quiz.class, quizID);
+        Player p = entityManager.find(Player.class, playerID);
+        return this.StartQuizMatch(p, q);
+    }    
     
 }

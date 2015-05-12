@@ -13,6 +13,7 @@
             List<Quiz> quizzes = (List<Quiz>)request.getAttribute("quizzes");
             
             for(Quiz q : quizzes) {
+                request.setAttribute("Quiz.QuizSimple.JSP", q);
             %>
             <li><%@include file="WEB-INF/jspf/QuizSimple.jsp" %></li>
             <% } %>
