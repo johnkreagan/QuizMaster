@@ -8,6 +8,7 @@ package edu.depaul.cdm.QuizMaster;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -106,7 +107,7 @@ public class QuizBean implements Serializable {
 
                         }
                         q1.setAnswers(answers);
-
+                        q1.setCorrectAnswer(answers.get(0));
                         questions.add(q1);
                     }
 
@@ -138,6 +139,7 @@ public class QuizBean implements Serializable {
         QuizMatch qm = new QuizMatch();
         qm.setPlayer(player);
         qm.setQuiz(quiz);
+        qm.setDateCreated(new Date());
         entityManager.persist(qm);
         return qm;
     }
@@ -147,5 +149,22 @@ public class QuizBean implements Serializable {
         Player p = entityManager.find(Player.class, playerID);
         return this.StartQuizMatch(p, q);
     }    
+    
+    public void GradeQuizMatch(QuizMatch qm) {
+        
+        Quiz quiz = qm.getQuiz();
+        
+        int score = 0;
+        
+        for(Answer answer : qm.getAnswers()) {
+            if(answer.isCorrectAnswer()) {
+                score++;
+            }
+        }
+        
+        qm.setScore(score);
+        
+        this.entityManager.merge(qm);
+    }
     
 }

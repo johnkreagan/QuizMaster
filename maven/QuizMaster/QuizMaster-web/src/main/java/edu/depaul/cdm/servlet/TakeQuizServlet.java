@@ -5,11 +5,15 @@
  */
 package edu.depaul.cdm.servlet;
 
+import edu.depaul.cdm.QuizMaster.Answer;
+import edu.depaul.cdm.QuizMaster.Question;
 import edu.depaul.cdm.QuizMaster.Quiz;
 import edu.depaul.cdm.QuizMaster.QuizBean;
 import edu.depaul.cdm.QuizMaster.QuizMatch;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Enumeration;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -42,11 +46,28 @@ public class TakeQuizServlet extends HttpServlet {
             try {
                 
                 QuizMatch quizMatch = (QuizMatch)request.getSession().getAttribute("activeQuizMatch");
-                
-                
-                request.setAttribute("activeQuiz", quizMatch.getQuiz());
-            } catch(NumberFormatException ipex) {
+                Quiz activeQuiz = quizMatch.getQuiz();
+                request.setAttribute("activeQuiz", activeQuiz);
+                String submitVal = request.getParameter("submitQuiz");
+                if (submitVal != null) {
                     
+                    Enumeration<String> params = request.getParameterNames();
+                    String paramName = params.nextElement();
+                    String paramValue;
+                    Answer answer;
+                    while(paramName != null && paramName.startsWith("Question_")) {
+                        paramValue = request.getParameter(paramName);
+                        
+                        quizMatch.addAnswer(this.getAnswerByParamaterValue(activeQuiz, paramName, paramValue));
+                        
+                        paramName = params.nextElement();
+                    }
+                    
+                    quizBean.GradeQuizMatch(quizMatch);
+                    request.setAttribute("gradedQuizMatch", quizMatch);
+                    request.getServletContext().getRequestDispatcher("/QuizComplete.jsp").forward(request, response);
+                    return;
+                }
                 
             } catch(Exception e) {
 
@@ -58,6 +79,36 @@ public class TakeQuizServlet extends HttpServlet {
         
     }
 
+    private Answer getAnswerByParamaterValue(Quiz quiz, String paramName, String paramValue) {
+        Answer answer = null;
+        
+        try {
+            long questionID = Long.parseLong(paramName.replace("Question_", ""));
+            long answerID = Long.parseLong(paramValue);
+            
+            Question questionByID = null;
+            for(Question q: quiz.getQuestions()) {
+                if (q.getId() == questionID) {
+                    questionByID = q;
+                    break;
+                }
+            }
+            
+            for(Answer a : questionByID.getAnswers()) {
+                if (answerID == a.getId()) {
+                    answer = a;
+                    break;
+                }
+            }
+            
+        } catch(Exception e) {
+            System.out.println("E = " + e.getMessage());
+        }
+        
+        return answer;
+    }
+    
+    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

@@ -6,6 +6,7 @@
 package edu.depaul.cdm.QuizMaster;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +15,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -26,6 +29,10 @@ public class QuizMatch implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Temporal(TemporalType.DATE)
+    @Column(name="DATE_CREATED")
+    private Date dateCreated;
+    
     @OneToOne
     private Player player;
     
@@ -34,6 +41,13 @@ public class QuizMatch implements Serializable {
     
     @OneToMany
     private List<Answer> answers;
+    
+    @Temporal(TemporalType.DATE)
+    @Column(name="DATE_SCORED")
+    private Date dateScored;
+    
+    @Column
+    private int score;
     
     public Long getId() {
         return id;
@@ -59,6 +73,14 @@ public class QuizMatch implements Serializable {
         this.quiz = quiz;
     }
 
+    public Date getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+    
     public List<Answer> getAnswers() {
         return answers;
     }
@@ -67,6 +89,26 @@ public class QuizMatch implements Serializable {
         this.answers = answers;
     }
     
+    public void addAnswer(Answer answer) {
+        this.answers.add(answer);
+    }
+
+    public Date getDateScored() {
+        return dateScored;
+    }
+
+    public void setDateScored(Date dateScored) {
+        this.dateScored = dateScored;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;

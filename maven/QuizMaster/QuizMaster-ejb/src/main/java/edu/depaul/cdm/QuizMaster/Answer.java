@@ -78,5 +78,9 @@ public class Answer implements Serializable {
     public String toString() {
         return "edu.depaul.cdm.jreagan1.QuizMaster.Answer[ id=" + id + " ]";
     }
+
+    boolean isCorrectAnswer() {
+        return this.getQuestion().getCorrectAnswer().equals(this);
+    }
     
 }
