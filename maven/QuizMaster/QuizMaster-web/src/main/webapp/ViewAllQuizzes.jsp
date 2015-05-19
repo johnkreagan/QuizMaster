@@ -1,21 +1,19 @@
-<%-- 
+<%--
     Document   : ViewAllQuizzes
     Created on : May 5, 2015, 8:21:14 PM
     Author     : John
 --%>
-<%@page import="edu.depaul.cdm.QuizMaster.Quiz"%>
 <%@page import="java.util.List"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <jsp:include page="WEB-INF/jspf/header.jsp" />
-        <h1>View All Quizzes!</h1>
+<h1>View All Quizzes!<%= request.getAttribute("quizCount") %></h1>
         <ul>
             
-        <%
-            List<Quiz> quizzes = (List<Quiz>)request.getAttribute("quizzes");
-            
-            for(Quiz q : quizzes) {
-                request.setAttribute("Quiz.QuizSimple.JSP", q);
-            %>
-            <li><%@include file="WEB-INF/jspf/QuizSimple.jsp" %></li>
-            <% } %>
+      <c:forEach var="account" begin="0" items="${requestScope.quizzes}">
+            <li>
+                ${account}
+            </li> 
+
+        </c:forEach>     
         </ul>
 <jsp:include page="WEB-INF/jspf/footer.jsp" />

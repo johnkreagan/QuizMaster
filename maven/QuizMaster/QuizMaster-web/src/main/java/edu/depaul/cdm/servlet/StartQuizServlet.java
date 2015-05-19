@@ -5,9 +5,10 @@
  */
 package edu.depaul.cdm.servlet;
 
-import edu.depaul.cdm.QuizMaster.Quiz;
-import edu.depaul.cdm.QuizMaster.QuizBean;
-import edu.depaul.cdm.QuizMaster.QuizMatch;
+//import edu.depaul.cdm.QuizMaster.Quiz;
+//import edu.depaul.cdm.QuizMaster.QuizBean;
+//import edu.depaul.cdm.QuizMaster.QuizMatch;
+import edu.depaul.cdm.quizmaster.QuizBeanRemote;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
@@ -27,7 +28,7 @@ public class StartQuizServlet extends HttpServlet {
 
     
     @EJB
-    private QuizBean quizBean;
+    private QuizBeanRemote quizBean;
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,17 +43,17 @@ public class StartQuizServlet extends HttpServlet {
             throws ServletException, IOException {
         
             try {
-                String begin = request.getParameter("startQuiz");
-                if(begin != null && begin.equals("Begin")) {
-                    
-                    QuizMatch quizMatch = quizBean.StartQuizMatch(Long.parseLong(request.getParameter("playerID")), Long.parseLong(request.getParameter("quizID")));
-                    
-                    request.getSession().setAttribute("activeQuizMatch", quizMatch);
-                    request.getServletContext().getRequestDispatcher("/TakeQuiz").forward(request, response);
-                    return;
-                } 
-                request.setAttribute("quizzes", quizBean.GetAllQuizzes());
-                request.setAttribute("players", quizBean.GetAllPlayers());
+//                String begin = request.getParameter("startQuiz");
+//                if(begin != null && begin.equals("Begin")) {
+//                    
+//                    QuizMatch quizMatch = quizBean.StartQuizMatch(Long.parseLong(request.getParameter("playerID")), Long.parseLong(request.getParameter("quizID")));
+//                    
+//                    request.getSession().setAttribute("activeQuizMatch", quizMatch);
+//                    request.getServletContext().getRequestDispatcher("/TakeQuiz").forward(request, response);
+//                    return;
+//                } 
+//                request.setAttribute("quizzes", quizBean.GetAllQuizzes());
+//                request.setAttribute("players", quizBean.GetAllPlayers());
                 
             } catch(Exception e) {
                 System.out.println("EX: " + e.getMessage());

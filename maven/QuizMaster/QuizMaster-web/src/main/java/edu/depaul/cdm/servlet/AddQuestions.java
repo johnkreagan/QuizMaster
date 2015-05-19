@@ -5,7 +5,7 @@
  */
 package edu.depaul.cdm.servlet;
 
-import edu.depaul.cdm.QuizMaster.QuizBean;
+import edu.depaul.cdm.quizmaster.QuizBeanRemote;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 public class AddQuestions extends HttpServlet {
 
     @EJB
-    private QuizBean quizBean;
+    private QuizBeanRemote quizBean;
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -48,9 +48,8 @@ public class AddQuestions extends HttpServlet {
             out.println("<h1>Servlet AddQuestions at " + request.getContextPath() + "</h1>");
             
             
-            quizBean.setupHistoryQuiz();
+            //quizBean.setupHistoryQuiz();
             
-            out.println(quizBean.getLastBuiltQuiz());
             out.println("<a href='ViewAllQuizzes'>View All</a>");
             out.println("</body>");
             out.println("</html>");

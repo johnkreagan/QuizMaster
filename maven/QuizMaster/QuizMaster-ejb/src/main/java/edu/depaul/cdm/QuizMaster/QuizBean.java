@@ -5,6 +5,7 @@
  */
 package edu.depaul.cdm.QuizMaster;
 
+import edu.depaul.cdm.quizmaster.QuizBeanRemote;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Local;
+import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -22,6 +24,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.transaction.Transaction;
 import javax.transaction.Transactional;
 import static javax.transaction.Transactional.TxType.REQUIRED;
@@ -32,9 +35,9 @@ import static javax.transaction.Transactional.TxType.REQUIRED;
  */
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 @Stateless
-@Named
-@Local
-public class QuizBean implements Serializable {
+//@Named("quizBean")
+@Remote(QuizBeanRemote.class)
+public class QuizBean implements QuizBeanRemote {
 
    private static final Logger logger = Logger.getLogger(QuizBean.class.getName());
     
@@ -42,14 +45,6 @@ public class QuizBean implements Serializable {
     private EntityManager entityManager;
 
     private Quiz lastBuiltQuiz;
-
-    public Quiz getLastBuiltQuiz() {
-        return lastBuiltQuiz;
-    }
-
-    public void setLastBuiltQuiz(Quiz lastBuiltQuiz) {
-        this.lastBuiltQuiz = lastBuiltQuiz;
-    }
     
     public QuizBean() {
        // lastBuiltQuiz = entityManager.find(Quiz.class, new Long(1));
@@ -57,12 +52,18 @@ public class QuizBean implements Serializable {
     
     
     //@Transactional
-    public List<Quiz> GetAllQuizzes() throws SQLException  {
+   @Override
+    public List<Long> GetAllQuizzes()  {
         logger.log(Level.INFO, "Pre Fetch all quizzes");
         //entityManager.getTransaction().begin();
-
-        return entityManager.createQuery("SELECT q FROM Quiz q").getResultList();
+        try     {
+            TypedQuery<Long> ids = entityManager.createQuery("SELECT q.id FROM Quiz q", Long.class);
+            return ids.getResultList();
+        } catch(Exception e) {
+           logger.log(Level.INFO, "EEE" + e.getMessage());     
+        }
         
+        return null;
     }
     
     public List<Player> GetAllPlayers() {
@@ -75,6 +76,7 @@ public class QuizBean implements Serializable {
     }
     
     //@Transactional
+
     public String setupHistoryQuiz() {
         
         try {
@@ -115,7 +117,7 @@ public class QuizBean implements Serializable {
 
                     entityManager.persist(quiz1);
 
-                    this.setLastBuiltQuiz(quiz1);
+                    //this.setLastBuiltQuiz(quiz1);
                 }
             
         } catch(Exception e) {
@@ -165,6 +167,59 @@ public class QuizBean implements Serializable {
         qm.setScore(score);
         
         this.entityManager.merge(qm);
+    }
+
+    @Override
+    public long CreateQuiz(String name, int type) {
+        
+        Quiz quiz = new Quiz();
+        quiz.setQuizName(name);
+        
+        this.entityManager.persist(quiz);
+        
+        return quiz.getId();
+        
+        
+    }
+
+    @Override
+    public long AddQuestion(long quizID, String questionTitle, float questionWeight) {
+       
+        Quiz q = this.entityManager.find(Quiz.class, quizID);
+        
+        Question question = new Question();
+        question.setQuestionText(questionTitle);
+        question.setQuiz(q);
+        
+        
+        this.entityManager.persist(question);
+        return question.getId();
+        
+    }
+
+    @Override
+    public long AddAnswer(long questionID, String answerText, float answerValue) {
+        Question q = this.entityManager.find(Question.class, questionID);
+        
+        Answer aw = new Answer();
+        aw.setAnswerText(answerText);
+        aw.setQuestion(q);
+        
+        this.entityManager.persist(aw);
+        
+        return aw.getId();
+        
+    }
+
+    @Override
+    public void SetCorrectAnswer(long questionID, long answerID) {
+        
+        Question q = this.entityManager.find(Question.class, questionID);
+        Answer a = this.entityManager.find(Answer.class, answerID);
+        
+        q.setCorrectAnswer(a);
+        this.entityManager.merge(q);
+        
     }
     
 }

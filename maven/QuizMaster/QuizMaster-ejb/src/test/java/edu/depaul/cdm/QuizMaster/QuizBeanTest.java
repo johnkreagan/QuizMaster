@@ -53,22 +53,6 @@ public class QuizBeanTest {
     public void tearDown() {
     }
 
-    /**
-     * Test of getLastBuiltQuiz method, of class QuizBean.
-     */
-    @org.junit.Test
-    public void testGetLastBuiltQuiz() throws Exception {
-        System.out.println("getLastBuiltQuiz");
-
-        QuizBean instance = (QuizBean)ctx.lookup("java:global/classes/QuizBean");
-        Quiz expResult = null;
-        Quiz result = instance.getLastBuiltQuiz();
-        assertEquals(expResult, result);
-        ec.close();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
 
     
 }

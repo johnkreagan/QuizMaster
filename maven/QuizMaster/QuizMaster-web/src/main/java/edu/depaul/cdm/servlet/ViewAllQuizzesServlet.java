@@ -5,13 +5,16 @@
  */
 package edu.depaul.cdm.servlet;
 
-import edu.depaul.cdm.QuizMaster.Answer;
-import edu.depaul.cdm.QuizMaster.Question;
+//import edu.depaul.cdm.QuizMaster.Answer;
+//import edu.depaul.cdm.QuizMaster.Question;
 import edu.depaul.cdm.QuizMaster.Quiz;
-import edu.depaul.cdm.QuizMaster.QuizBean;
+//import edu.depaul.cdm.QuizMaster.QuizBean;
+import edu.depaul.cdm.quizmaster.QuizBeanRemote;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -26,8 +29,10 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "ViewAllQuizzes", urlPatterns = {"/ViewAllQuizzes"})
 public class ViewAllQuizzesServlet extends HttpServlet {
 
+    private static final Logger logger = Logger.getLogger(ViewAllQuizzesServlet.class.getName());
+    
     @EJB
-    private QuizBean quizBean; 
+    private QuizBeanRemote quizBean; 
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -69,11 +74,18 @@ public class ViewAllQuizzesServlet extends HttpServlet {
 //                out.println("<h1>Quizzes Exception:" + e.getMessage()+ "</h1");
 //            }
 
-        try {
-            request.setAttribute("quizzes", quizBean.GetAllQuizzes());
-        } catch(Exception e) {
+//        try {
             
-        }
+            logger.log(Level.INFO, "PRE");
+        Quiz q = new Quiz();
+            //return quizBean.GetAllQuizzes();
+//            logger.log(Level.INFO, "PRE2");
+                request.setAttribute("quizzes", quizBean.GetAllQuizzes());
+//            request.setAttribute("quizCount", quizBean.toString());
+//            logger.log(Level.INFO, "PRE3");
+//        } catch(Exception e) {
+//            logger.log(Level.INFO, "PREEX: " + e.getMessage());
+//        }
         
         
         request.getServletContext().getRequestDispatcher("/ViewAllQuizzes.jsp").forward(request, response);
