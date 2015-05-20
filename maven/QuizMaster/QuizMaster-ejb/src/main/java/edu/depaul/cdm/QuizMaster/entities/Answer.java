@@ -3,33 +3,35 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.depaul.cdm.QuizMaster.service;
+package edu.depaul.cdm.QuizMaster.entities;
 
+import edu.depaul.cdm.QuizMaster.DTODescriptor.AnswerDescriptor;
 import edu.depaul.cdm.QuizMaster.DTODescriptor.Descriptor;
 import edu.depaul.cdm.QuizMaster.DTODescriptor.IDescriptable;
-import edu.depaul.cdm.QuizMaster.DTODescriptor.PlayerDescriptor;
 import java.io.Serializable;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQuery;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 /**
  *
- * @author John
+ * @author johnreagan
  */
 @Entity
-@NamedQuery(name="findAllPlayers", query="SELECT p FROM Player p")
-public class Player implements IDescriptable, Serializable {
+public class Answer implements IDescriptable, Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @ManyToOne
+    @JoinColumn(name="QUESTION_ID")
+    private Question question;
     
-    @Column(name="player_name")
-    private String name;
+    private String answerText;
     
     public Long getId() {
         return id;
@@ -39,15 +41,21 @@ public class Player implements IDescriptable, Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getAnswerText() {
+        return answerText;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setAnswerText(String answerText) {
+        this.answerText = answerText;
     }
 
-    
+    public Question getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(Question question) {
+        this.question = question;
+    }
     
     @Override
     public int hashCode() {
@@ -59,10 +67,10 @@ public class Player implements IDescriptable, Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Player)) {
+        if (!(object instanceof Answer)) {
             return false;
         }
-        Player other = (Player) object;
+        Answer other = (Answer) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -71,15 +79,25 @@ public class Player implements IDescriptable, Serializable {
 
     @Override
     public String toString() {
-        return "edu.depaul.cdm.jreagan1.QuizMaster.Player[ id=" + id + " ]";
+        return "edu.depaul.cdm.jreagan1.QuizMaster.Answer[ id=" + id + " ]";
     }
-    
+
+    public boolean isCorrectAnswer() {
+        try {
+           return this.getQuestion().getCorrectAnswer().equals(this); 
+        } catch(Exception e) {
+            //assume we have no quiz or question. If so, we arent the correct answer. Return false
+        }
+        return false;
+    }
+
     @Override
     public Descriptor getDescriptor() {
         
-        PlayerDescriptor ans = new PlayerDescriptor();
+        AnswerDescriptor ans = new AnswerDescriptor();
         ans.setId(this.getId());
-        ans.setName(ans.getName());
+        ans.setName(this.getAnswerText());
+        ans.setAnswerText(this.getAnswerText());
         
         return ans;
     }

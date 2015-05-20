@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.depaul.cdm.QuizMaster.service;
+package edu.depaul.cdm.QuizMaster.entities;
 
 import edu.depaul.cdm.QuizMaster.DTODescriptor.Descriptor;
 import edu.depaul.cdm.QuizMaster.DTODescriptor.IDescriptable;
@@ -136,7 +136,7 @@ public class Question implements IDescriptable, Serializable {
         
         QuestionDescriptor ques = new QuestionDescriptor();
         ques.setId(this.getId());
-        ques.setName(ques.getName());
+        ques.setName(this.getQuestionText());
         ques.setQuestionText(this.getQuestionText());
         return ques;
     }

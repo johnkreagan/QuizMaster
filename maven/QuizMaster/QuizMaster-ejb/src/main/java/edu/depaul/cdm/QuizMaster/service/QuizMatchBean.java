@@ -5,6 +5,11 @@
  */
 package edu.depaul.cdm.QuizMaster.service;
 
+import edu.depaul.cdm.QuizMaster.entities.Player;
+import edu.depaul.cdm.QuizMaster.entities.Quiz;
+import edu.depaul.cdm.QuizMaster.entities.QuizMatch;
+import edu.depaul.cdm.QuizMaster.entities.Answer;
+import edu.depaul.cdm.QuizMaster.entities.Question;
 import edu.depaul.cdm.QuizMasterRemote.QuizMatchRemote;
 import java.io.Serializable;
 import java.util.Date;

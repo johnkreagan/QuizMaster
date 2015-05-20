@@ -3,12 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.depaul.cdm.QuizMaster.service;
+package edu.depaul.cdm.QuizMaster.entities;
 
 import edu.depaul.cdm.QuizMaster.DTODescriptor.Descriptor;
 import edu.depaul.cdm.QuizMaster.DTODescriptor.IDescriptable;
 import edu.depaul.cdm.QuizMaster.DTODescriptor.QuizMatchDescriptor;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
@@ -51,6 +52,10 @@ public class QuizMatch implements IDescriptable, Serializable {
     
     @Column
     private int score;
+    
+    public QuizMatch() {
+        this.answers = new ArrayList<>();
+    }
     
     public Long getId() {
         return id;
