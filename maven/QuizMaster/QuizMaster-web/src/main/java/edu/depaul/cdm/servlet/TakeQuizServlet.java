@@ -10,7 +10,7 @@ package edu.depaul.cdm.servlet;
 //import edu.depaul.cdm.QuizMaster.Quiz;
 //import edu.depaul.cdm.QuizMaster.QuizBean;
 //import edu.depaul.cdm.QuizMaster.QuizMatch;
-import edu.depaul.cdm.quizmaster.QuizBeanRemote;
+import edu.depaul.cdm.QuizMasterRemote.QuizBeanRemote;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Enumeration;

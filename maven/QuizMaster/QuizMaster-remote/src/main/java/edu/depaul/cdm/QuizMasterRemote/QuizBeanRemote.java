@@ -3,11 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.depaul.cdm.quizmaster;
+package edu.depaul.cdm.QuizMasterRemote;
 
+import edu.depaul.cdm.QuizMaster.DTODescriptor.PlayerDescriptor;
+import edu.depaul.cdm.QuizMaster.DTODescriptor.QuizDescriptor;
 import java.io.Serializable;
 import javax.ejb.Remote;
 import java.util.List;
+
 
 /**
  *
@@ -24,6 +27,7 @@ public interface QuizBeanRemote extends Serializable {
     
     void SetCorrectAnswer(long questionID, long answerID);
     
-    List<Long> GetAllQuizzes();
+    List<QuizDescriptor> GetAllQuizzes();
     
+    List<PlayerDescriptor> GetAllPlayers();
 }

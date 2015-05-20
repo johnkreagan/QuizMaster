@@ -3,14 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.depaul.cdm.QuizMaster;
+package edu.depaul.cdm.QuizMaster.service;
 
-import edu.depaul.cdm.quizmaster.QuizBeanRemote;
+import edu.depaul.cdm.QuizMaster.DTODescriptor.PlayerDescriptor;
+import edu.depaul.cdm.QuizMasterRemote.QuizBeanRemote;
+import edu.depaul.cdm.QuizMaster.DTODescriptor.QuizDescriptor;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Local;
@@ -53,20 +56,26 @@ public class QuizBean implements QuizBeanRemote {
     
     //@Transactional
    @Override
-    public List<Long> GetAllQuizzes()  {
+    public List<QuizDescriptor> GetAllQuizzes()  {
         logger.log(Level.INFO, "Pre Fetch all quizzes");
         //entityManager.getTransaction().begin();
+        List<QuizDescriptor> returnedQuizzes = new ArrayList<QuizDescriptor>();
         try     {
-            TypedQuery<Long> ids = entityManager.createQuery("SELECT q.id FROM Quiz q", Long.class);
-            return ids.getResultList();
+            List<Quiz> quizzes = entityManager.createQuery("SELECT q FROM Quiz q").getResultList();
+            for(Quiz q : quizzes) {
+                returnedQuizzes.add(q.getDescriptor());
+            }
+            
         } catch(Exception e) {
            logger.log(Level.INFO, "EEE" + e.getMessage());     
         }
         
-        return null;
+        return returnedQuizzes;
     }
     
-    public List<Player> GetAllPlayers() {
+    @Override
+    public List<PlayerDescriptor> GetAllPlayers() {
+        //return entityManager.createNamedQuery("findAllPlayers", Player.class).getResultList();
         return entityManager.createQuery("SELECT p FROM Player p").getResultList();
     }
     

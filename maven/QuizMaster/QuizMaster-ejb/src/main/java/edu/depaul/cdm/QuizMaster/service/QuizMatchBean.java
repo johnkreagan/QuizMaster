@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.depaul.cdm.QuizMaster;
+package edu.depaul.cdm.QuizMaster.service;
 
-import edu.depaul.cdm.quizmaster.QuizMatchRemote;
+import edu.depaul.cdm.QuizMasterRemote.QuizMatchRemote;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;

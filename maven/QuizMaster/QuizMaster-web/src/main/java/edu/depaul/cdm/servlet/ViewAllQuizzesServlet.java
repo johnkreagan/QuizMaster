@@ -7,9 +7,7 @@ package edu.depaul.cdm.servlet;
 
 //import edu.depaul.cdm.QuizMaster.Answer;
 //import edu.depaul.cdm.QuizMaster.Question;
-import edu.depaul.cdm.QuizMaster.Quiz;
-//import edu.depaul.cdm.QuizMaster.QuizBean;
-import edu.depaul.cdm.quizmaster.QuizBeanRemote;
+import edu.depaul.cdm.QuizMasterRemote.QuizBeanRemote;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -77,7 +75,6 @@ public class ViewAllQuizzesServlet extends HttpServlet {
 //        try {
             
             logger.log(Level.INFO, "PRE");
-        Quiz q = new Quiz();
             //return quizBean.GetAllQuizzes();
 //            logger.log(Level.INFO, "PRE2");
                 request.setAttribute("quizzes", quizBean.GetAllQuizzes());

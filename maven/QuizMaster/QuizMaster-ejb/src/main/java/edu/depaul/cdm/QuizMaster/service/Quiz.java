@@ -3,8 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.depaul.cdm.QuizMaster;
+package edu.depaul.cdm.QuizMaster.service;
 
+import edu.depaul.cdm.QuizMaster.DTODescriptor.Descriptor;
+import edu.depaul.cdm.QuizMaster.DTODescriptor.IDescriptable;
+import edu.depaul.cdm.QuizMaster.DTODescriptor.QuizDescriptor;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -22,7 +25,7 @@ import javax.persistence.OneToMany;
  */
 @Entity
 @NamedQuery(name="findAllQuizzes", query="SELECT q FROM Quiz q")
-public class Quiz implements Serializable {
+public class Quiz implements Serializable, IDescriptable {
     private static final long serialVersionUID = 1L;
     
     @Id
@@ -67,6 +70,19 @@ public class Quiz implements Serializable {
     public void setQuizName(String quizName) {
         this.quizName = quizName;
     }
+    
+    @Override
+    public QuizDescriptor getDescriptor() {
+        
+        QuizDescriptor qd = new QuizDescriptor();
+        
+        qd.id = this.getId();
+        qd.name = this.getQuizName();
+        
+        return qd;
+        
+    }
+    
     
 //    public void addQuestion(Question q) {
 //        this.questions.add(q);

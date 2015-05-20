@@ -5,13 +5,9 @@
  */
 package edu.depaul.cdm.servlet;
 
-//import edu.depaul.cdm.QuizMaster.Quiz;
-//import edu.depaul.cdm.QuizMaster.QuizBean;
-//import edu.depaul.cdm.QuizMaster.QuizMatch;
 import edu.depaul.cdm.QuizMasterRemote.QuizBeanRemote;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Date;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,10 +19,9 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author John
  */
-@WebServlet(name = "StartQuiz", urlPatterns = {"/StartQuiz"})
-public class StartQuizServlet extends HttpServlet {
+@WebServlet(name = "ViewAllPlayers", urlPatterns = {"/ViewAllPlayers"})
+public class ViewAllPlayers extends HttpServlet {
 
-    
     @EJB
     private QuizBeanRemote quizBean;
     
@@ -41,26 +36,23 @@ public class StartQuizServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-            try {
-//                String begin = request.getParameter("startQuiz");
-//                if(begin != null && begin.equals("Begin")) {
-//                    
-//                    QuizMatch quizMatch = quizBean.StartQuizMatch(Long.parseLong(request.getParameter("playerID")), Long.parseLong(request.getParameter("quizID")));
-//                    
-//                    request.getSession().setAttribute("activeQuizMatch", quizMatch);
-//                    request.getServletContext().getRequestDispatcher("/TakeQuiz").forward(request, response);
-//                    return;
-//                } 
-//                request.setAttribute("quizzes", quizBean.GetAllQuizzes());
-//                request.setAttribute("players", quizBean.GetAllPlayers());
-                
-            } catch(Exception e) {
-                System.out.println("EX: " + e.getMessage());
-            }
-        
-            request.getServletContext().getRequestDispatcher("/StartQuiz.jsp").forward(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ViewAllPlayers</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet ViewAllPlayers at " + request.getContextPath() + "</h1>");
             
+            out.println(quizBean.GetAllPlayers());
+            
+            
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

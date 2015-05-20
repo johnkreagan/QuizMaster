@@ -5,7 +5,7 @@
  */
 package edu.depaul.cdm.servlet;
 
-import edu.depaul.cdm.quizmaster.QuizBeanRemote;
+import edu.depaul.cdm.QuizMasterRemote.QuizBeanRemote;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;

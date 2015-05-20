@@ -3,8 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.depaul.cdm.QuizMaster;
+package edu.depaul.cdm.QuizMaster.service;
 
+import edu.depaul.cdm.QuizMaster.DTODescriptor.Descriptor;
+import edu.depaul.cdm.QuizMaster.DTODescriptor.IDescriptable;
+import edu.depaul.cdm.QuizMaster.DTODescriptor.QuizMatchDescriptor;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -23,7 +26,7 @@ import javax.persistence.TemporalType;
  * @author John
  */
 @Entity
-public class QuizMatch implements Serializable {
+public class QuizMatch implements IDescriptable, Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -132,6 +135,16 @@ public class QuizMatch implements Serializable {
     @Override
     public String toString() {
         return "edu.depaul.cdm.jreagan1.QuizMaster.QuizMatch[ id=" + id + " ]";
+    }
+    
+    @Override
+    public Descriptor getDescriptor() {
+        QuizMatchDescriptor qmd = new QuizMatchDescriptor();
+        
+        qmd.setId(this.getId());
+        qmd.setName("QuizMatchID: " + this.getId());
+        
+        return qmd;
     }
     
 }
