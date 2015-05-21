@@ -5,7 +5,7 @@
  */
 package edu.depaul.cdm.servlet;
 
-import edu.depaul.cdm.QuizMasterRemote.QuizBeanRemote;
+import edu.depaul.cdm.QuizMaster.service.StatefulQuizBeanRemote;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -19,11 +19,11 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author John
  */
-@WebServlet(name = "AddQuestions", urlPatterns = {"/AddQuestions"})
-public class AddQuestions extends HttpServlet {
+@WebServlet(name = "StartQuizStateful", urlPatterns = {"/StartQuizStateful"})
+public class StartQuizStateful extends HttpServlet {
 
     @EJB
-    private QuizBeanRemote quizBean;
+    private StatefulQuizBeanRemote quizBean;
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,23 +37,18 @@ public class AddQuestions extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet AddQuestions</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet AddQuestions at " + request.getContextPath() + "</h1>");
+        
+        
+        
+        if (request.getParameter("startQuiz") != null) {
             
+            String quizID = "";
+            quizID = request.getParameter("quizID");
+            String playerID = "";
+            playerID = request.getParameter("playerID");
             
-            quizBean.addDefaultQuestions();
-            
-            out.println("<a href='ViewAllQuizzes'>View All</a>");
-            out.println("</body>");
-            out.println("</html>");
         }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

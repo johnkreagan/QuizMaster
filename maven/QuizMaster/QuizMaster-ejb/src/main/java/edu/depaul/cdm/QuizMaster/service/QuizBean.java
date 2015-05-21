@@ -51,8 +51,6 @@ public class QuizBean implements QuizBeanRemote {
     
     @PersistenceContext(unitName = "QuizMaster-WEBPU")
     private EntityManager entityManager;
-
-    private Quiz lastBuiltQuiz;
     
     public QuizBean() {
        // lastBuiltQuiz = entityManager.find(Quiz.class, new Long(1));
@@ -81,7 +79,13 @@ public class QuizBean implements QuizBeanRemote {
     @Override
     public List<PlayerDescriptor> GetAllPlayers() {
         //return entityManager.createNamedQuery("findAllPlayers", Player.class).getResultList();
-        return entityManager.createQuery("SELECT p FROM Player p").getResultList();
+        List<PlayerDescriptor> playerDTOs = new ArrayList<>();
+        List<Player> players =  entityManager.createQuery("SELECT p FROM Player p").getResultList();
+        for(Player p : players) {
+            playerDTOs.add((PlayerDescriptor)p.getDescriptor());
+        }
+        
+        return playerDTOs;
     }
     
     //@Transactional
@@ -234,6 +238,11 @@ public class QuizBean implements QuizBeanRemote {
         q.setCorrectAnswer(a);
         this.entityManager.merge(q);
         
+    }
+
+    @Override
+    public void addDefaultQuestions() {
+        this.setupHistoryQuiz();
     }
     
 }

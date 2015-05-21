@@ -30,4 +30,6 @@ public interface QuizBeanRemote extends Serializable {
     List<QuizDescriptor> GetAllQuizzes();
     
     List<PlayerDescriptor> GetAllPlayers();
+
+    public void addDefaultQuestions();
 }

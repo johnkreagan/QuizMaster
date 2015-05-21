@@ -5,7 +5,7 @@
  */
 package edu.depaul.cdm.servlet;
 
-import edu.depaul.cdm.QuizMasterRemote.QuizBeanRemote;
+import edu.depaul.cdm.QuizMaster.service.StatefulQuizBeanRemote;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -19,11 +19,12 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author John
  */
-@WebServlet(name = "AddQuestions", urlPatterns = {"/AddQuestions"})
-public class AddQuestions extends HttpServlet {
+@WebServlet(name = "TakeQuizStateful", urlPatterns = {"/TakeQuizStateful"})
+public class TakeQuizStatefulServlet extends HttpServlet {
 
     @EJB
-    private QuizBeanRemote quizBean;
+    private StatefulQuizBeanRemote quizBean;
+    
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,23 +38,23 @@ public class AddQuestions extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet AddQuestions</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet AddQuestions at " + request.getContextPath() + "</h1>");
+        
+        
+        if (request.getAttribute("startQuiz") != null) {
             
+            Long quizID = (Long)request.getAttribute("quizID");
+            Long playerID = (Long)request.getAttribute("playerID");
             
-            quizBean.addDefaultQuestions();
+            Long quizMatchID = quizBean.startQuiz(quizID, playerID);
             
-            out.println("<a href='ViewAllQuizzes'>View All</a>");
-            out.println("</body>");
-            out.println("</html>");
         }
+        if (request.getAttribute("next") != null) {
+            quizBean.goToNextQuestion();
+        }
+        
+        request.setAttribute("currentQuestion", quizBean.getCurrentQuestion());
+        
+        request.getServletContext().getRequestDispatcher("/TakeQuizStateful.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

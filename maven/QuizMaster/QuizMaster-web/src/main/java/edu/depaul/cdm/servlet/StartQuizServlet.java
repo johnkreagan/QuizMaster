@@ -43,17 +43,26 @@ public class StartQuizServlet extends HttpServlet {
             throws ServletException, IOException {
         
             try {
-//                String begin = request.getParameter("startQuiz");
-//                if(begin != null && begin.equals("Begin")) {
-//                    
-//                    QuizMatch quizMatch = quizBean.StartQuizMatch(Long.parseLong(request.getParameter("playerID")), Long.parseLong(request.getParameter("quizID")));
+                String begin = request.getParameter("startQuiz");
+                String formatType = request.getParameter("quizFormat");
+                if(begin != null && begin.equals("Begin")) {
+                    
+//                    Long quizMatchID = quizBean.(Long.parseLong(request.getParameter("playerID")), Long.parseLong(request.getParameter("quizID")));
 //                    
 //                    request.getSession().setAttribute("activeQuizMatch", quizMatch);
-//                    request.getServletContext().getRequestDispatcher("/TakeQuiz").forward(request, response);
-//                    return;
-//                } 
-//                request.setAttribute("quizzes", quizBean.GetAllQuizzes());
-//                request.setAttribute("players", quizBean.GetAllPlayers());
+                    request.setAttribute("quizID", Long.parseLong(request.getParameter("quizID")));
+                    request.setAttribute("playerID", Long.parseLong(request.getParameter("playerID")));
+                    request.setAttribute("startQuiz", true);
+                    if (formatType.equals("stateless")) {
+                        request.getServletContext().getRequestDispatcher("/TakeQuiz").forward(request, response);
+                    } else {
+                        request.getServletContext().getRequestDispatcher("/TakeQuizStateful").forward(request, response);
+                    }
+                    
+                    return;
+                } 
+                request.setAttribute("quizzes", quizBean.GetAllQuizzes());
+                request.setAttribute("players", quizBean.GetAllPlayers());
                 
             } catch(Exception e) {
                 System.out.println("EX: " + e.getMessage());
