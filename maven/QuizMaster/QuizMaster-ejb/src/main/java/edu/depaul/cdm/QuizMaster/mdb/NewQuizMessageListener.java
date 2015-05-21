@@ -15,7 +15,8 @@ import javax.jms.TextMessage;
  *
  * @author John
  */
-@MessageDriven(mappedName="jms/QuizMasterNewQuizTopic", activationConfig = {
+@MessageDriven(mappedName="jms/QuizMasterNewQuizTopic", 
+        activationConfig = {
     @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Topic"),
     //@ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = "jms/QuizMasterNewQuizTopic"),
     @ActivationConfigProperty(propertyName = "subscriptionDurability", propertyValue = "Durable"),

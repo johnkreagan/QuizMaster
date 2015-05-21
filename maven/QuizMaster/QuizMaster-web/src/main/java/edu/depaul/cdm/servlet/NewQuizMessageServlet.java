@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import javax.annotation.Resource;
 import javax.jms.JMSException;
+import javax.jms.MessageProducer;
 import javax.jms.Queue;
 import javax.jms.QueueConnection;
 import javax.jms.QueueConnectionFactory;
@@ -16,6 +17,10 @@ import javax.jms.QueueSender;
 import javax.jms.QueueSession;
 import javax.jms.Session;
 import javax.jms.TextMessage;
+import javax.jms.Topic;
+import javax.jms.TopicConnection;
+import javax.jms.TopicConnectionFactory;
+import javax.jms.TopicSession;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -29,10 +34,10 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "NewQuizMessageServlet", urlPatterns = {"/NewQuizMessageServlet"})
 public class NewQuizMessageServlet extends HttpServlet {
 
-    @Resource(mappedName = "jms/QuizMasterNewQuizQueue")
-    private Queue queue;
+    @Resource(mappedName = "jms/QuizMasterNewQuizTopic")
+    private Topic topic;
     @Resource(mappedName = "jms/QuizMasterConnectionFactory")
-    private QueueConnectionFactory queueConnectionFactory;
+    private TopicConnectionFactory topicConnectionFactory;
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -49,10 +54,10 @@ public class NewQuizMessageServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         try {
             
-            QueueConnection queueConnection = queueConnectionFactory.createQueueConnection();
-            queueConnection.start();
-            QueueSession queueSession = queueConnection.createQueueSession(false, Session.AUTO_ACKNOWLEDGE);
-            QueueSender sender = queueSession.createSender(queue);
+            TopicConnection topicConnection = topicConnectionFactory.createTopicConnection();
+            topicConnection.start();
+            Session session = topicConnection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+            MessageProducer mp = session.createProducer(topic);
 
             StringBuilder builder = new StringBuilder();
             builder.append(request.getParameter("fromAccount"));
@@ -60,9 +65,9 @@ public class NewQuizMessageServlet extends HttpServlet {
             builder.append(request.getParameter("toAccount"));
             builder.append(";");
             builder.append(request.getParameter("amount"));
-            TextMessage msg = queueSession.createTextMessage(builder.toString());
+            TextMessage msg = session.createTextMessage(builder.toString());
 
-            sender.send(msg);
+            mp.send(msg);
             
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
@@ -72,6 +77,7 @@ public class NewQuizMessageServlet extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet NewQuizMessageServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>SENDER at " + mp + "</h1>");
             out.println("</body>");
             out.println("</html>");
         } catch(JMSException exception) {
