@@ -22,4 +22,3 @@
             <input type="submit" name="startQuiz" value="Begin" />
         </form>
 <jsp:include page="WEB-INF/jspf/footer.jsp" />
-</html>

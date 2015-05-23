@@ -12,10 +12,12 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
 import static javax.persistence.CascadeType.PERSIST;
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
@@ -25,11 +27,13 @@ import javax.persistence.OneToMany;
  */
 @Entity
 @NamedQuery(name="findAllQuizzes", query="SELECT q FROM Quiz q")
-public class Quiz implements Serializable, IDescriptable {
+@Inheritance
+@DiscriminatorColumn(name="QUIZ_TYPE")
+public abstract class Quiz implements Serializable, IDescriptable {
     private static final long serialVersionUID = 1L;
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToMany(mappedBy="quiz", cascade=CascadeType.PERSIST)
@@ -83,6 +87,11 @@ public class Quiz implements Serializable, IDescriptable {
         
     }
     
+    public void addQuestion(Question question) {
+        this.questions.add(question);
+    }
+    
+    
     
 //    public void addQuestion(Question q) {
 //        this.questions.add(q);
@@ -116,5 +125,7 @@ public class Quiz implements Serializable, IDescriptable {
     public String toString() {
         return "edu.depaul.cdm.jreagan1.QuizMaster.Quiz[ id=" + id + " ]";
     }
+
+
     
 }

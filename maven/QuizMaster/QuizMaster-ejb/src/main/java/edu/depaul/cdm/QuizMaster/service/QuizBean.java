@@ -13,6 +13,7 @@ import edu.depaul.cdm.QuizMaster.entities.Question;
 import edu.depaul.cdm.QuizMaster.DTODescriptor.PlayerDescriptor;
 import edu.depaul.cdm.QuizMasterRemote.QuizBeanRemote;
 import edu.depaul.cdm.QuizMaster.DTODescriptor.QuizDescriptor;
+import edu.depaul.cdm.QuizMaster.entities.ScoredQuiz;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -102,7 +103,7 @@ public class QuizBean implements QuizBeanRemote {
             List<Quiz> quizzes = entityManager.createNamedQuery("findAllQuizzes").getResultList();
             logger.log(Level.INFO, "Quizzes size = " + quizzes.size());
             if(quizzes.isEmpty()) {
-                Quiz newQuiz = new Quiz();
+                Quiz newQuiz = new ScoredQuiz();
                 newQuiz.setQuizName("Default Quiz");
                 quizzes.add(newQuiz);
             }
@@ -151,46 +152,14 @@ public class QuizBean implements QuizBeanRemote {
     public void AddQuestion(int quizID, Question question) {
         
        Quiz q = entityManager.find(Quiz.class, quizID);
-       //q.addQuestion(question);
-        
+       q.addQuestion(question);
+       this.entityManager.merge(question);
     }
     
-    public QuizMatch StartQuizMatch(Player player, Quiz quiz) {
-        QuizMatch qm = new QuizMatch();
-        qm.setPlayer(player);
-        qm.setQuiz(quiz);
-        qm.setDateCreated(new Date());
-        entityManager.persist(qm);
-        return qm;
-    }
-    
-    public QuizMatch StartQuizMatch(long playerID, long quizID) {
-        Quiz q = entityManager.find(Quiz.class, quizID);
-        Player p = entityManager.find(Player.class, playerID);
-        return this.StartQuizMatch(p, q);
-    }    
-    
-    public void GradeQuizMatch(QuizMatch qm) {
-        
-        Quiz quiz = qm.getQuiz();
-        
-        int score = 0;
-        
-        for(Answer answer : qm.getAnswers()) {
-            if(answer.isCorrectAnswer()) {
-                score++;
-            }
-        }
-        
-        qm.setScore(score);
-        
-        this.entityManager.merge(qm);
-    }
-
     @Override
     public long CreateQuiz(String name, int type) {
         
-        Quiz quiz = new Quiz();
+        Quiz quiz = new ScoredQuiz();
         quiz.setQuizName(name);
         
         this.entityManager.persist(quiz);

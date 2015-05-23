@@ -91,6 +91,39 @@ public class QuizMatchBean implements  Serializable, QuizMatchRemote  {
         return o.setParameter("q", q).getResultList();
     }
 
+    public QuizMatch StartQuizMatch(Player player, Quiz quiz) {
+        QuizMatch qm = new QuizMatch();
+        qm.setPlayer(player);
+        qm.setQuiz(quiz);
+        qm.setDateCreated(new Date());
+        entityManager.persist(qm);
+        return qm;
+    }
+    
+//    public QuizMatch StartQuizMatch(long playerID, long quizID) {
+//        Quiz q = entityManager.find(Quiz.class, quizID);
+//        Player p = entityManager.find(Player.class, playerID);
+//        return this.StartQuizMatch(p, q);
+//    }    
+    
+    public void GradeQuizMatch(QuizMatch qm) {
+        
+        Quiz quiz = qm.getQuiz();
+        
+        int score = 0;
+        
+        for(Answer answer : qm.getAnswers()) {
+            if(answer.isCorrectAnswer()) {
+                score++;
+            }
+        }
+        
+        qm.setScore(score);
+        
+        this.entityManager.merge(qm);
+    }
+    
+    
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
 }

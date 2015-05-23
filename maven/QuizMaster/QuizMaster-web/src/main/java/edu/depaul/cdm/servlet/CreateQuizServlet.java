@@ -5,7 +5,7 @@
  */
 package edu.depaul.cdm.servlet;
 
-import edu.depaul.cdm.QuizMaster.service.StatefulQuizMatchBeanRemote;
+import edu.depaul.cdm.QuizMaster.service.StatefulQuizBeanRemote;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -19,11 +19,12 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author John
  */
-@WebServlet(name = "StartQuizStateful", urlPatterns = {"/StartQuizStateful"})
-public class StartQuizStateful extends HttpServlet {
+@WebServlet(name = "CreateQuiz", urlPatterns = {"/CreateQuiz"})
+public class CreateQuizServlet extends HttpServlet {
 
     @EJB
-    private StatefulQuizMatchBeanRemote quizBean;
+    private StatefulQuizBeanRemote quizBean;
+    
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,18 +37,48 @@ public class StartQuizStateful extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        
-        
-        
-        if (request.getParameter("startQuiz") != null) {
             
-            String quizID = "";
-            quizID = request.getParameter("quizID");
-            String playerID = "";
-            playerID = request.getParameter("playerID");
+        String action = request.getParameter("createQuizAction");
+        action = (action  == null) ? "" : action;
+        if (action.equals("Create")) {
+            String name = request.getParameter("quizName");
+            String type = request.getParameter("quizType");
+            name = (name == null) ? "" : name;
+            type = (type == null) ? "" : type;
+            Long quizID = quizBean.createQuiz(name, type);
+            request.setAttribute("quizID", quizID);
             
-        }
+            request.getServletContext().getRequestDispatcher("/AddQuestion.jsp").forward(request, response);
+            return;
+        } else if (action.equals("Add Question")) {
+            
+            String questionText = request.getParameter("questionText");
+            
+            Long questionID = quizBean.addQuestion(questionText);
+            
+            String answerText;
+            for (int i = 0; i < 4; i++) {
+                answerText = request.getParameter("answerText_" + i);
+                if (answerText != null && answerText.length() > 0) {
+                    quizBean.addAnswer(questionID, answerText);
+                }
+            }
+            
+            
+            request.getServletContext().getRequestDispatcher("/AddQuestion.jsp").forward(request, response);
+            return;
+        } else if (action.equals("Done")) {
+        
+            request.setAttribute("currentQuiz", this.quizBean.getCurrentQuiz());
+            request.getServletContext().getRequestDispatcher("/CreateQuizDone.jsp").forward(request, response);
+            return;
+        }   
+        request.getServletContext().getRequestDispatcher("/CreateQuiz.jsp").forward(request, response);
+        
+    
+        
+        
+        
         
     }
 

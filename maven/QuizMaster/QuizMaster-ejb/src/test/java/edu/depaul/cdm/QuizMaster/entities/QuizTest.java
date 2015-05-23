@@ -31,8 +31,14 @@ public class QuizTest {
     public static void tearDownClass() {
     }
     
+    private Quiz testQuiz;
+    
     @Before
     public void setUp() {
+        
+        testQuiz = new ScoredQuiz();
+        
+        
     }
     
     @After
@@ -45,7 +51,7 @@ public class QuizTest {
     @Test
     public void testGetId() {
         System.out.println("getId");
-        Quiz instance = new Quiz();
+        Quiz instance = testQuiz;
         Long expResult = null;
         Long result = instance.getId();
         assertEquals(expResult, result);
@@ -58,7 +64,7 @@ public class QuizTest {
     public void testSetId() {
         System.out.println("setId");
         Long id = null;
-        Quiz instance = new Quiz();
+        Quiz instance = testQuiz;
         instance.setId(id);
     }
 
@@ -68,7 +74,7 @@ public class QuizTest {
     @Test
     public void testGetQuestions() {
         System.out.println("getQuestions");
-        Quiz instance = new Quiz();
+        Quiz instance = testQuiz;
         List<Question> expResult = null;
         List<Question> result = instance.getQuestions();
         assertEquals(expResult, result);
@@ -81,7 +87,7 @@ public class QuizTest {
     public void testSetQuestions() {
         System.out.println("setQuestions");
         List<Question> Questions = null;
-        Quiz instance = new Quiz();
+        Quiz instance = testQuiz;
         instance.setQuestions(Questions);
     }
 
@@ -91,7 +97,7 @@ public class QuizTest {
     @Test
     public void testGetQuizName() {
         System.out.println("getQuizName");
-        Quiz instance = new Quiz();
+        Quiz instance = testQuiz;
         String expResult = "QUIZNAME";
         instance.setQuizName(expResult);
         String result = instance.getQuizName();
@@ -105,7 +111,7 @@ public class QuizTest {
     public void testSetQuizName() {
         System.out.println("setQuizName");
         String quizName = "";
-        Quiz instance = new Quiz();
+        Quiz instance = testQuiz;
         instance.setQuizName(quizName);
     }
 
@@ -115,7 +121,7 @@ public class QuizTest {
     @Test
     public void testGetDescriptor() {
         System.out.println("getDescriptor");
-        Quiz instance = new Quiz();
+        Quiz instance = testQuiz;
         instance.setId(Long.MIN_VALUE);
         instance.setQuizName("QUIZNAME");
         
@@ -130,7 +136,7 @@ public class QuizTest {
     @Test
     public void testHashCode() {
         System.out.println("hashCode");
-        Quiz instance = new Quiz();
+        Quiz instance = testQuiz;
         int expResult = 0;
         int result = instance.hashCode();
         assertEquals(expResult, result);
@@ -143,7 +149,7 @@ public class QuizTest {
     public void testEquals() {
         System.out.println("equals");
         Object object = null;
-        Quiz instance = new Quiz();
+        Quiz instance = testQuiz;
         boolean expResult = false;
         boolean result = instance.equals(object);
         assertEquals(expResult, result);
@@ -155,7 +161,7 @@ public class QuizTest {
     @Test
     public void testToString() {
         System.out.println("toString");
-        Quiz instance = new Quiz();
+        Quiz instance = testQuiz;
         String expResult = instance.toString();
         String result = instance.toString();
         assertEquals(expResult, result);

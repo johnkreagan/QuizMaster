@@ -5,7 +5,7 @@
  */
 package edu.depaul.cdm.servlet;
 
-import edu.depaul.cdm.QuizMaster.service.StatefulQuizBeanRemote;
+import edu.depaul.cdm.QuizMaster.service.StatefulQuizMatchBeanRemote;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 public class TakeQuizStatefulServlet extends HttpServlet {
 
     @EJB
-    private StatefulQuizBeanRemote quizBean;
+    private StatefulQuizMatchBeanRemote quizBean;
     
     
     /**

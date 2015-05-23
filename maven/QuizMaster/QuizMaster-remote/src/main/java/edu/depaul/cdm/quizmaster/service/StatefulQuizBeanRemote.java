@@ -5,7 +5,8 @@
  */
 package edu.depaul.cdm.QuizMaster.service;
 
-import edu.depaul.cdm.QuizMaster.DTODescriptor.QuestionDescriptor;
+import edu.depaul.cdm.QuizMaster.DTODescriptor.QuizDescriptor;
+import edu.depaul.cdm.QuizMasterRemote.QuizBeanRemote;
 import javax.ejb.Remote;
 
 /**
@@ -15,12 +16,14 @@ import javax.ejb.Remote;
 @Remote
 public interface StatefulQuizBeanRemote {
 
-    long startQuiz(long quizID, long playerID);
+    Long createQuiz(String QuizName, String QuizTypeString);
 
-    QuestionDescriptor getCurrentQuestion();
+    Long addQuestion(String questionTitle);
 
-    QuestionDescriptor goToNextQuestion();
+    Long addAnswer(long questionID, String answerText);
 
-    Long submitAnswer(Long answerID);
+    void setCorrectAnswer(long questionID, long answerID);
+
+    public QuizDescriptor getCurrentQuiz();
     
 }

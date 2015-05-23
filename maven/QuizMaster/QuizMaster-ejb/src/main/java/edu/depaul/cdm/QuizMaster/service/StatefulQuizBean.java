@@ -5,76 +5,91 @@
  */
 package edu.depaul.cdm.QuizMaster.service;
 
-import edu.depaul.cdm.QuizMaster.DTODescriptor.QuestionDescriptor;
+import edu.depaul.cdm.QuizMaster.DTODescriptor.QuizDescriptor;
 import edu.depaul.cdm.QuizMaster.entities.Answer;
-import edu.depaul.cdm.QuizMaster.entities.Player;
 import edu.depaul.cdm.QuizMaster.entities.Question;
 import edu.depaul.cdm.QuizMaster.entities.Quiz;
-import edu.depaul.cdm.QuizMaster.entities.QuizMatch;
-import java.util.ListIterator;
-import java.util.logging.Logger;
-import javax.ejb.Remote;
+import edu.depaul.cdm.QuizMaster.entities.QuizFactory;
+import edu.depaul.cdm.QuizMaster.entities.ScoredQuiz;
+import edu.depaul.cdm.QuizMaster.entities.SurveyQuiz;
+import edu.depaul.cdm.QuizMasterRemote.QuizBeanRemote;
+import javax.ejb.EJB;
 import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
- *
+ * Stateful proxy bean for QuizBeanRemote
  * @author John
  */
 @Stateful
-@Remote(StatefulQuizBeanRemote.class)
 public class StatefulQuizBean implements StatefulQuizBeanRemote {
 
-    private static final Logger logger = Logger.getLogger(StatefulQuizBean.class.getName());
+    // Add business logic below. (Right-click in editor and choose
+    // "Insert Code > Add Business Method")
     
     @PersistenceContext(unitName = "QuizMaster-WEBPU")
     private EntityManager entityManager;
     
-    private QuizMatch activeQuizMatch;
-
-    private ListIterator<Question> questionsIterator;
-    
-    private Question currentQuestion;
+    private Quiz currentQuiz;
     
     @Override
-    public long startQuiz(long quizID, long playerID) {
+    public Long createQuiz(String QuizName, String QuizTypeString) {
         
-        Quiz q = this.entityManager.find(Quiz.class, quizID);
-        Player p = this.entityManager.find(Player.class, playerID);
-        this.activeQuizMatch = new QuizMatch();
+       Quiz q = QuizFactory.CreateQuiz(QuizName, QuizTypeString);
+       
+       this.entityManager.persist(q);
+       this.currentQuiz = q;
         
-        this.activeQuizMatch.setQuiz(q);
-        this.activeQuizMatch.setPlayer(p);
-        this.questionsIterator = q.getQuestions().listIterator();
-        this.currentQuestion = this.questionsIterator.next();
-        
-        this.entityManager.persist(this.activeQuizMatch);
-        return this.activeQuizMatch.getId();
+       return q.getId();
     }
 
     @Override
-    public QuestionDescriptor getCurrentQuestion() {
-        return (QuestionDescriptor)this.currentQuestion.getDescriptor();
-    }
-
-    @Override
-    public QuestionDescriptor goToNextQuestion() {
-        Question next = this.questionsIterator.next();
-        if (next != null) {
-            this.currentQuestion = next;
-        }
-        return (QuestionDescriptor)this.currentQuestion.getDescriptor();
-    }
-
-    @Override
-    public Long submitAnswer(Long answerID) {
+    public Long addQuestion(String questionTitle) {
+        Question question = new Question();
         
-        Answer a = this.entityManager.find(Answer.class, answerID);
-        this.activeQuizMatch.addAnswer(a);
-        this.entityManager.merge(this.activeQuizMatch);
-        return a.getId();
+        question.setQuestionText(questionTitle);
+        question.setQuiz(currentQuiz);
+        this.entityManager.persist(question);
+        
+        return question.getId();
     }
+
+    @Override
+    public Long addAnswer(long questionID, String answerText) {
+        
+        Question question = this.entityManager.find(Question.class, questionID);
+
+        Answer answer = new Answer();
+        answer.setAnswerText(answerText);
+        answer.setQuestion(question);
+        
+        this.entityManager.persist(answer);
+        
+        return answer.getId();
+    }
+
+    @Override
+    public void setCorrectAnswer(long questionID, long answerID) {
+        
+        Question question = this.entityManager.find(Question.class, questionID);
+        Answer answer = this.entityManager.find(Answer.class, answerID);
+        
+        question.setCorrectAnswer(answer);
+        
+        this.entityManager.merge(question);
+        
+    }
+    
+    @Override
+    public QuizDescriptor getCurrentQuiz() {
+        return this.currentQuiz.getDescriptor();
+    }
+    
+    
+    
+    
+    
     
     
     
