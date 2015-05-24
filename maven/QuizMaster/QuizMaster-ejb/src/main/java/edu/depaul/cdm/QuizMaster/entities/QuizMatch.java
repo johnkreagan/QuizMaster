@@ -149,6 +149,10 @@ public class QuizMatch implements IDescriptable, Serializable {
         qmd.setId(this.getId());
         qmd.setName("QuizMatchID: " + this.getId());
         
+        for(Answer answer : this.getAnswers()) {
+            
+        }
+        
         return qmd;
     }
     

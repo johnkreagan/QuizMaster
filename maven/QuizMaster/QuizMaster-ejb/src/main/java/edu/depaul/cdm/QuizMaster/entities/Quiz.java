@@ -7,8 +7,10 @@ package edu.depaul.cdm.QuizMaster.entities;
 
 import edu.depaul.cdm.QuizMaster.DTODescriptor.Descriptor;
 import edu.depaul.cdm.QuizMaster.DTODescriptor.IDescriptable;
+import edu.depaul.cdm.QuizMaster.DTODescriptor.QuestionDescriptor;
 import edu.depaul.cdm.QuizMaster.DTODescriptor.QuizDescriptor;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import static javax.persistence.CascadeType.PERSIST;
@@ -30,14 +32,15 @@ import javax.persistence.OneToMany;
 @Inheritance
 @DiscriminatorColumn(name="QUIZ_TYPE")
 public abstract class Quiz implements Serializable, IDescriptable {
+    
     private static final long serialVersionUID = 1L;
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @OneToMany(mappedBy="quiz", cascade=CascadeType.PERSIST)
-    private List<Question> questions;
+    private List<Question> questions = new ArrayList<>();
     
     private String quizName;
     
@@ -82,6 +85,10 @@ public abstract class Quiz implements Serializable, IDescriptable {
         
         qd.id = this.getId();
         qd.name = this.getQuizName();
+
+        for (Question question : this.getQuestions()) {
+            qd.addQuestion((QuestionDescriptor)question.getDescriptor());
+        }
         
         return qd;
         

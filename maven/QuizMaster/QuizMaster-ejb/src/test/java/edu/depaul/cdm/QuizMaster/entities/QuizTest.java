@@ -75,9 +75,9 @@ public class QuizTest {
     public void testGetQuestions() {
         System.out.println("getQuestions");
         Quiz instance = testQuiz;
-        List<Question> expResult = null;
+        int expectedSize = 0;
         List<Question> result = instance.getQuestions();
-        assertEquals(expResult, result);
+        assertEquals(expectedSize, result.size());
     }
 
     /**

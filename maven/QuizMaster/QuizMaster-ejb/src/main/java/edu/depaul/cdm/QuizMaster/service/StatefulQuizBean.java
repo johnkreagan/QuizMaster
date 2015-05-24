@@ -50,6 +50,7 @@ public class StatefulQuizBean implements StatefulQuizBeanRemote {
         
         question.setQuestionText(questionTitle);
         question.setQuiz(currentQuiz);
+        currentQuiz.addQuestion(question);
         this.entityManager.persist(question);
         
         return question.getId();

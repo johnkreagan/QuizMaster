@@ -6,6 +6,8 @@
 package edu.depaul.cdm.QuizMaster.DTODescriptor;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -13,14 +15,32 @@ import java.io.Serializable;
  */
 public class QuestionDescriptor extends Descriptor implements Serializable {
     
+    public QuestionDescriptor() {
+        this.answers = new ArrayList<>();
+    }
+    
     private String questionText;
 
+    private List<AnswerDescriptor> answers;
+    
     public String getQuestionText() {
         return questionText;
     }
 
     public void setQuestionText(String questionText) {
         this.questionText = questionText;
+    }
+
+    public List<AnswerDescriptor> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(List<AnswerDescriptor> answers) {
+        this.answers = answers;
+    }
+    
+    public void addAnswer(AnswerDescriptor answer) {
+        this.answers.add(answer);
     }
     
 }

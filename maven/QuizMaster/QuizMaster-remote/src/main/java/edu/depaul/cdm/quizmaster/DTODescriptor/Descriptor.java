@@ -16,7 +16,7 @@ public abstract class Descriptor implements Serializable {
     public Long id;
     
     public String name;
-
+    
     public Long getId() {
         return id;
     }

@@ -5,11 +5,13 @@
  */
 package edu.depaul.cdm.QuizMaster.entities;
 
+import edu.depaul.cdm.QuizMaster.DTODescriptor.AnswerDescriptor;
 import edu.depaul.cdm.QuizMaster.DTODescriptor.Descriptor;
 import edu.depaul.cdm.QuizMaster.DTODescriptor.IDescriptable;
 import edu.depaul.cdm.QuizMaster.DTODescriptor.PlayerDescriptor;
 import edu.depaul.cdm.QuizMaster.DTODescriptor.QuestionDescriptor;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -28,6 +30,7 @@ import javax.persistence.OneToOne;
  */
 @Entity
 public class Question implements IDescriptable, Serializable {
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -49,7 +52,7 @@ public class Question implements IDescriptable, Serializable {
     private String questionText;
     
     @OneToMany(mappedBy="question", cascade=CascadeType.PERSIST)
-    private List<Answer> answers;
+    private List<Answer> answers = new ArrayList<>();
     
     @OneToOne
     private Answer correctAnswer;
@@ -138,6 +141,11 @@ public class Question implements IDescriptable, Serializable {
         ques.setId(this.getId());
         ques.setName(this.getQuestionText());
         ques.setQuestionText(this.getQuestionText());
+        
+        for (Answer answer : this.getAnswers()) {
+            ques.addAnswer((AnswerDescriptor)answer.getDescriptor());
+        }
+        
         return ques;
     }
     

@@ -116,9 +116,9 @@ public class QuestionTest {
     public void testGetAnswers() {
         System.out.println("getAnswers");
         Question instance = new Question();
-        List<Answer> expResult = null;
+        int expResult = 0;
         List<Answer> result = instance.getAnswers();
-        assertEquals(expResult, result);
+        assertEquals(expResult, result.size());
     }
 
     /**
