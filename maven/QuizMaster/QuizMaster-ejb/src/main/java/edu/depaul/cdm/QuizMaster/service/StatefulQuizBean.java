@@ -9,10 +9,12 @@ import edu.depaul.cdm.QuizMaster.DTODescriptor.QuizDescriptor;
 import edu.depaul.cdm.QuizMaster.entities.Answer;
 import edu.depaul.cdm.QuizMaster.entities.Question;
 import edu.depaul.cdm.QuizMaster.entities.Quiz;
-import edu.depaul.cdm.QuizMaster.entities.QuizFactory;
+import edu.depaul.cdm.QuizMaster.factories.QuizFactory;
 import edu.depaul.cdm.QuizMaster.entities.ScoredQuiz;
+import edu.depaul.cdm.QuizMaster.entities.SurveyQuestion;
 import edu.depaul.cdm.QuizMaster.entities.SurveyQuiz;
 import edu.depaul.cdm.QuizMasterRemote.QuizBeanRemote;
+import java.util.Map;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
@@ -31,29 +33,40 @@ public class StatefulQuizBean implements StatefulQuizBeanRemote {
     @PersistenceContext(unitName = "QuizMaster-WEBPU")
     private EntityManager entityManager;
     
+    private QuizFactory quizFactory;
+    
     private Quiz currentQuiz;
     
     @Override
     public Long createQuiz(String QuizName, String QuizTypeString) {
-        
-       Quiz q = QuizFactory.CreateQuiz(QuizName, QuizTypeString);
+       quizFactory = new QuizFactory();
        
-       this.entityManager.persist(q);
-       this.currentQuiz = q;
+       QuizFactory.QuizType type = (QuizTypeString.equals("SCORED")) ? QuizFactory.QuizType.Scored : QuizFactory.QuizType.Survey;
+       
+       quizFactory.initiateQuiz(QuizName, type);
+       
+//       
+//       Quiz q = QuizFactory.CreateQuiz(QuizName, QuizTypeString);
+//       
+//       this.entityManager.persist(q);
+//       this.currentQuiz = q;
         
-       return q.getId();
+       return 1L;
     }
 
     @Override
-    public Long addQuestion(String questionTitle) {
-        Question question = new Question();
+    public Long addSurveyQuestion(String questionTitle, int weight, Map<String,Integer> answers) {
         
-        question.setQuestionText(questionTitle);
-        question.setQuiz(currentQuiz);
-        currentQuiz.addQuestion(question);
-        this.entityManager.persist(question);
+        quizFactory.addSurveyQuestion(questionTitle, weight, answers);
         
-        return question.getId();
+//        Question question = new SurveyQuestion();
+//        
+//        question.setQuestionText(questionTitle);
+//        question.setQuiz(currentQuiz);
+//        currentQuiz.addQuestion(question);
+//        this.entityManager.persist(question);
+        
+        return 0L;
     }
 
     @Override

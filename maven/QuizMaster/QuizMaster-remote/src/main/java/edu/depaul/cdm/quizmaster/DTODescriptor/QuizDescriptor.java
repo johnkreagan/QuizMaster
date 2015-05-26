@@ -15,9 +15,16 @@ import java.util.List;
  */
 public class QuizDescriptor extends Descriptor implements Serializable {
     
+    public enum QuizType {
+        Scored,
+        Survey
+    }
+    
     public QuizDescriptor() {
         this.questions = new ArrayList<>();
     }
+    
+    public QuizType type;
     
     private List<QuestionDescriptor> questions;
 
@@ -32,6 +39,15 @@ public class QuizDescriptor extends Descriptor implements Serializable {
     public void addQuestion(QuestionDescriptor question) {
         this.questions.add(question);
     }
+
+    public QuizType getType() {
+        return type;
+    }
+
+    public void setType(QuizType type) {
+        this.type = type;
+    }
+    
     
     
 }

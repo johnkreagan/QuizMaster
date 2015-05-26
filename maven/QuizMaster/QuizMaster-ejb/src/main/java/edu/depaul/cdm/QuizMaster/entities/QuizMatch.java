@@ -5,6 +5,7 @@
  */
 package edu.depaul.cdm.QuizMaster.entities;
 
+import edu.depaul.cdm.QuizMaster.DTODescriptor.AnswerDescriptor;
 import edu.depaul.cdm.QuizMaster.DTODescriptor.Descriptor;
 import edu.depaul.cdm.QuizMaster.DTODescriptor.IDescriptable;
 import edu.depaul.cdm.QuizMaster.DTODescriptor.QuizMatchDescriptor;
@@ -150,7 +151,7 @@ public class QuizMatch implements IDescriptable, Serializable {
         qmd.setName("QuizMatchID: " + this.getId());
         
         for(Answer answer : this.getAnswers()) {
-            
+            qmd.addAnswer((AnswerDescriptor)answer.getDescriptor());
         }
         
         return qmd;

@@ -34,6 +34,11 @@ public class SurveyQuiz extends Quiz implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+    
+    @Override
+    public String getQuizType() {
+        return ScoredQuiz.DISCRIMINATOR_VALUE;
+    }
 
     @Override
     public int hashCode() {

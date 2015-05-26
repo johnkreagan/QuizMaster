@@ -6,6 +6,7 @@
 package edu.depaul.cdm.QuizMaster.entities;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,16 +18,16 @@ import javax.persistence.Id;
  * @author John
  */
 @Entity
-@DiscriminatorValue(ScoredQuiz.DISCRIMINATOR_VALUE)
-public class ScoredQuiz extends Quiz implements Serializable {
-    
-    public static final String DISCRIMINATOR_VALUE = "SCORED";
-    
+@DiscriminatorValue("SURVEY")
+public class SurveyQuestion extends Question implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(name="weight")
+    private int weight;
+    
     public Long getId() {
         return id;
     }
@@ -35,11 +36,13 @@ public class ScoredQuiz extends Quiz implements Serializable {
         this.id = id;
     }
 
-    @Override
-    public String getQuizType() {
-        return ScoredQuiz.DISCRIMINATOR_VALUE;
+    public int getWeight() {
+        return weight;
     }
 
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
     
     @Override
     public int hashCode() {
@@ -51,10 +54,10 @@ public class ScoredQuiz extends Quiz implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ScoredQuiz)) {
+        if (!(object instanceof SurveyQuestion)) {
             return false;
         }
-        ScoredQuiz other = (ScoredQuiz) object;
+        SurveyQuestion other = (SurveyQuestion) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -63,7 +66,7 @@ public class ScoredQuiz extends Quiz implements Serializable {
 
     @Override
     public String toString() {
-        return "edu.depaul.cdm.QuizMaster.entities.ScoredQuiz[ id=" + id + " ]";
+        return "edu.depaul.cdm.QuizMaster.entities.SurveyQuestion[ id=" + id + " ]";
     }
     
 }

@@ -96,58 +96,58 @@ public class QuizBean implements QuizBeanRemote {
     
     //@Transactional
 
-    public String setupHistoryQuiz() {
-        
-        try {
-            logger.log(Level.INFO, "Pre findallquizzes");
-            List<Quiz> quizzes = entityManager.createNamedQuery("findAllQuizzes").getResultList();
-            logger.log(Level.INFO, "Quizzes size = " + quizzes.size());
-            if(quizzes.isEmpty()) {
-                Quiz newQuiz = new ScoredQuiz();
-                newQuiz.setQuizName("Default Quiz");
-                quizzes.add(newQuiz);
-            }
-            for (Quiz quiz1 : quizzes) {
-                    quiz1.getQuestions().clear();
-
-                    List<Question> questions = new ArrayList();
-
-                    for(int k = 0; k < 5; k++) {
-                        Question q1 = new Question();
-                        q1.setQuiz(quiz1);
-                        q1.setQuestionText("Who killed the radio star? --" + k + "--");
-                        List<Answer> answers = new ArrayList();
-                        for(int j = 0; j < 3; j++) {
-
-
-                            Answer ans = new Answer();
-                            ans.setQuestion(q1);
-                            ans.setAnswerText("Video --" + j + "--" );
-                            answers.add(ans);
-
-
-                        }
-                        q1.setAnswers(answers);
-                        q1.setCorrectAnswer(answers.get(0));
-                        questions.add(q1);
-                    }
-
-                    quiz1.setQuestions(questions);
-
-                    entityManager.persist(quiz1);
-
-                    //this.setLastBuiltQuiz(quiz1);
-                }
-            
-        } catch(Exception e) {
-            System.out.println(e.getMessage());
-        }
-        
-        
-       
-        
-        return "";
-    }
+//    public String setupHistoryQuiz() {
+//        
+//        try {
+//            logger.log(Level.INFO, "Pre findallquizzes");
+//            List<Quiz> quizzes = entityManager.createNamedQuery("findAllQuizzes").getResultList();
+//            logger.log(Level.INFO, "Quizzes size = " + quizzes.size());
+//            if(quizzes.isEmpty()) {
+//                Quiz newQuiz = new ScoredQuiz();
+//                newQuiz.setQuizName("Default Quiz");
+//                quizzes.add(newQuiz);
+//            }
+//            for (Quiz quiz1 : quizzes) {
+//                    quiz1.getQuestions().clear();
+//
+//                    List<Question> questions = new ArrayList();
+//
+//                    for(int k = 0; k < 5; k++) {
+//                        Question q1 = new Question();
+//                        q1.setQuiz(quiz1);
+//                        q1.setQuestionText("Who killed the radio star? --" + k + "--");
+//                        List<Answer> answers = new ArrayList();
+//                        for(int j = 0; j < 3; j++) {
+//
+//
+//                            Answer ans = new Answer();
+//                            ans.setQuestion(q1);
+//                            ans.setAnswerText("Video --" + j + "--" );
+//                            answers.add(ans);
+//
+//
+//                        }
+//                        q1.setAnswers(answers);
+//                        q1.setCorrectAnswer(answers.get(0));
+//                        questions.add(q1);
+//                    }
+//
+//                    quiz1.setQuestions(questions);
+//
+//                    entityManager.persist(quiz1);
+//
+//                    //this.setLastBuiltQuiz(quiz1);
+//                }
+//            
+//        } catch(Exception e) {
+//            System.out.println(e.getMessage());
+//        }
+//        
+//        
+//       
+//        
+//        return "";
+//    }
     
     public void AddQuestion(int quizID, Question question) {
         

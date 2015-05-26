@@ -6,27 +6,29 @@
 package edu.depaul.cdm.QuizMaster.entities;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
 
 /**
  *
  * @author John
  */
 @Entity
-@DiscriminatorValue(ScoredQuiz.DISCRIMINATOR_VALUE)
-public class ScoredQuiz extends Quiz implements Serializable {
-    
-    public static final String DISCRIMINATOR_VALUE = "SCORED";
-    
+@DiscriminatorValue("W")
+public class WeightedAnswer extends Answer implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(name="weight")
+    private Integer weight;
+    
     public Long getId() {
         return id;
     }
@@ -35,11 +37,15 @@ public class ScoredQuiz extends Quiz implements Serializable {
         this.id = id;
     }
 
-    @Override
-    public String getQuizType() {
-        return ScoredQuiz.DISCRIMINATOR_VALUE;
+    public Integer getWeight() {
+        return weight;
     }
 
+    public void setWeight(Integer weight) {
+        this.weight = weight;
+    }
+
+    
     
     @Override
     public int hashCode() {
@@ -51,10 +57,10 @@ public class ScoredQuiz extends Quiz implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ScoredQuiz)) {
+        if (!(object instanceof WeightedAnswer)) {
             return false;
         }
-        ScoredQuiz other = (ScoredQuiz) object;
+        WeightedAnswer other = (WeightedAnswer) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -63,7 +69,7 @@ public class ScoredQuiz extends Quiz implements Serializable {
 
     @Override
     public String toString() {
-        return "edu.depaul.cdm.QuizMaster.entities.ScoredQuiz[ id=" + id + " ]";
+        return "edu.depaul.cdm.QuizMaster.entities.WeightedAnswer[ id=" + id + " ]";
     }
     
 }

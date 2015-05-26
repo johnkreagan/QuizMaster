@@ -9,10 +9,14 @@ import edu.depaul.cdm.QuizMaster.DTODescriptor.AnswerDescriptor;
 import edu.depaul.cdm.QuizMaster.DTODescriptor.Descriptor;
 import edu.depaul.cdm.QuizMaster.DTODescriptor.IDescriptable;
 import java.io.Serializable;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
@@ -21,6 +25,9 @@ import javax.persistence.ManyToOne;
  * @author johnreagan
  */
 @Entity
+@Inheritance(strategy=InheritanceType.JOINED)
+@DiscriminatorColumn(name="ANSWER_TYPE")
+@DiscriminatorValue("A")
 public class Answer implements IDescriptable, Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -82,14 +89,14 @@ public class Answer implements IDescriptable, Serializable {
         return "edu.depaul.cdm.jreagan1.QuizMaster.Answer[ id=" + id + " ]";
     }
 
-    public boolean isCorrectAnswer() {
-        try {
-           return this.getQuestion().getCorrectAnswer().equals(this); 
-        } catch(Exception e) {
-            //assume we have no quiz or question. If so, we arent the correct answer. Return false
-        }
-        return false;
-    }
+//    public boolean isCorrectAnswer() {
+//        try {
+//           return this.getQuestion().getCorrectAnswer().equals(this); 
+//        } catch(Exception e) {
+//            //assume we have no quiz or question. If so, we arent the correct answer. Return false
+//        }
+//        return false;
+//    }
 
     @Override
     public Descriptor getDescriptor() {

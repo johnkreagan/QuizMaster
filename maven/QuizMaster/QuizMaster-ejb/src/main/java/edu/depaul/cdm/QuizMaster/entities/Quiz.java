@@ -78,6 +78,8 @@ public abstract class Quiz implements Serializable, IDescriptable {
         this.quizName = quizName;
     }
     
+    public abstract String getQuizType();
+    
     @Override
     public QuizDescriptor getDescriptor() {
         
@@ -90,6 +92,17 @@ public abstract class Quiz implements Serializable, IDescriptable {
             qd.addQuestion((QuestionDescriptor)question.getDescriptor());
         }
         
+        switch (this.getQuizType()) {
+            case ScoredQuiz.DISCRIMINATOR_VALUE:
+                qd.setType(QuizDescriptor.QuizType.Scored);
+                break;
+            case SurveyQuiz.DISCRIMINATOR_VALUE:
+                qd.setType(QuizDescriptor.QuizType.Survey);
+                break;
+            default:
+                throw new AssertionError();
+        }
+        
         return qd;
         
     }
@@ -97,16 +110,6 @@ public abstract class Quiz implements Serializable, IDescriptable {
     public void addQuestion(Question question) {
         this.questions.add(question);
     }
-    
-    
-    
-//    public void addQuestion(Question q) {
-//        this.questions.add(q);
-//    }
-//    
-//    public void removeQuestion(Question q) {
-//        this.questions.remove(q);
-//    }
     
     @Override
     public int hashCode() {
