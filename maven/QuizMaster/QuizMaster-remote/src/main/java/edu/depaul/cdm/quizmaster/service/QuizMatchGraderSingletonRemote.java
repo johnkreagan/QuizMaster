@@ -5,6 +5,7 @@
  */
 package edu.depaul.cdm.QuizMaster.service;
 
+import edu.depaul.cdm.QuizMaster.DTODescriptor.QuizResult;
 import javax.ejb.Remote;
 
 /**
@@ -14,6 +15,6 @@ import javax.ejb.Remote;
 @Remote
 public interface QuizMatchGraderSingletonRemote {
 
-    void submitQuizMatchForGrading(Long quizMatchID);
+    QuizResult submitQuizMatchForGrading(Long quizMatchID);
     
 }
