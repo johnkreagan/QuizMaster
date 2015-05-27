@@ -48,8 +48,21 @@ public class TakeQuizStatefulServlet extends HttpServlet {
             Long quizMatchID = quizBean.startQuiz(quizID, playerID);
             
         }
-        if (request.getAttribute("next") != null) {
-            quizBean.goToNextQuestion();
+        
+        if (request.getParameter("addAnswer") != null) {
+            Long answerID = Long.parseLong(request.getParameter("answerID"));
+            quizBean.submitAnswer(answerID);
+        }
+        
+        if (request.getParameter("next") != null) {
+            if (quizBean.hasNextQuestion()) {
+                quizBean.goToNextQuestion();
+            } else {
+                request.setAttribute("quizMatch", quizBean.getQuizMatch());
+                request.getServletContext().getRequestDispatcher("/TakeQuizStatefulDone.jsp").forward(request, response);
+                return;
+            }
+            
         }
         
         request.setAttribute("currentQuestion", quizBean.getCurrentQuestion());

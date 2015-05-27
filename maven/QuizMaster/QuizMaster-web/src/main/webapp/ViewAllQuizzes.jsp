@@ -9,9 +9,20 @@
 <h1>View All Quizzes!<%= request.getAttribute("quizzes") %></h1>
         <ul>
             
-      <c:forEach var="account" begin="0" items="${requestScope.quizzes}">
+      <c:forEach var="quiz" begin="0" items="${requestScope.quizzes}">
             <li>
-                ${account.id}
+                ${quiz.name}
+                <ul>
+                    <c:forEach var="question" begin="0" items="${quiz.getQuestions()}">
+                        <li>${question.getQuestionText()}</li>
+                        <ol>
+                            <c:forEach var="answer" begin="0" items="${question.getAnswers()}">
+                                <li>${answer.getAnswerText()}</li>
+                            </c:forEach>
+                        </ol>
+                    </c:forEach>
+                    
+                </ul>
             </li>
         </c:forEach>     
         </ul>

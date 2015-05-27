@@ -6,7 +6,9 @@
 package edu.depaul.cdm.QuizMaster.DTODescriptor;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -15,14 +17,14 @@ import java.util.List;
 public class QuizMatchDescriptor extends Descriptor {
     
     public QuizMatchDescriptor() {
-        this.answers = new ArrayList<>();
+        this.answers = new HashMap<>();
     }
     
     private QuizDescriptor quiz;
     
     private PlayerDescriptor player;
     
-    private List<AnswerDescriptor> answers;
+    private Map<QuestionDescriptor,AnswerDescriptor> answers;
 
     public QuizDescriptor getQuiz() {
         return quiz;
@@ -40,16 +42,16 @@ public class QuizMatchDescriptor extends Descriptor {
         this.player = player;
     }
 
-    public List<AnswerDescriptor> getAnswers() {
+    public Map<QuestionDescriptor,AnswerDescriptor> getAnswers() {
         return answers;
     }
 
-    public void setAnswers(List<AnswerDescriptor> answers) {
+    public void setAnswers(Map<QuestionDescriptor,AnswerDescriptor> answers) {
         this.answers = answers;
     }
     
-    public void addAnswer(AnswerDescriptor answer) {
-        this.answers.add(answer);
+    public void addAnswer(QuestionDescriptor question, AnswerDescriptor answer) {
+        this.answers.put(question, answer);
     }
     
     

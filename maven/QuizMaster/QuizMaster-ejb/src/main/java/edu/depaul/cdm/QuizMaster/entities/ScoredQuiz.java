@@ -5,7 +5,11 @@
  */
 package edu.depaul.cdm.QuizMaster.entities;
 
+import edu.depaul.cdm.QuizMaster.DTODescriptor.QuizDescriptor;
+import edu.depaul.cdm.QuizMaster.DTODescriptor.QuizDescriptor.QuizType;
+import edu.depaul.cdm.QuizMaster.DTODescriptor.QuizResult;
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -59,5 +63,17 @@ public class ScoredQuiz extends Quiz implements Serializable {
     public String toString() {
         return "edu.depaul.cdm.QuizMaster.entities.ScoredQuiz[ id=" + id + " ]";
     }
+
+    @Override
+    public QuizDescriptor.QuizType getDescriptorType() {
+        return QuizType.Scored;
+    }
+
+    @Override
+    public QuizResult getResults(List<Answer> answers) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
     
 }

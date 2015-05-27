@@ -9,6 +9,8 @@ import edu.depaul.cdm.QuizMaster.DTODescriptor.Descriptor;
 import edu.depaul.cdm.QuizMaster.DTODescriptor.IDescriptable;
 import edu.depaul.cdm.QuizMaster.DTODescriptor.QuestionDescriptor;
 import edu.depaul.cdm.QuizMaster.DTODescriptor.QuizDescriptor;
+import edu.depaul.cdm.QuizMaster.DTODescriptor.QuizDescriptor.QuizType;
+import edu.depaul.cdm.QuizMaster.DTODescriptor.QuizResult;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -90,6 +92,8 @@ public abstract class Quiz implements Serializable, IDescriptable {
             qd.addQuestion((QuestionDescriptor)question.getDescriptor());
         }
         
+        qd.setType(this.getDescriptorType());
+        
         return qd;
         
     }
@@ -98,7 +102,9 @@ public abstract class Quiz implements Serializable, IDescriptable {
         this.questions.add(question);
     }
     
+    public abstract QuizType getDescriptorType();
     
+    public abstract QuizResult getResults(List<Answer> answers);
     
 //    public void addQuestion(Question q) {
 //        this.questions.add(q);

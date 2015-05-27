@@ -6,6 +6,7 @@
 package edu.depaul.cdm.QuizMaster.service;
 
 import edu.depaul.cdm.QuizMaster.DTODescriptor.QuestionDescriptor;
+import edu.depaul.cdm.QuizMaster.DTODescriptor.QuizMatchDescriptor;
 import edu.depaul.cdm.QuizMaster.entities.Answer;
 import edu.depaul.cdm.QuizMaster.entities.Player;
 import edu.depaul.cdm.QuizMaster.entities.Question;
@@ -74,6 +75,16 @@ public class StatefulQuizMatchBean implements StatefulQuizMatchBeanRemote {
         this.activeQuizMatch.addAnswer(a);
         this.entityManager.merge(this.activeQuizMatch);
         return a.getId();
+    }
+    
+    @Override
+    public boolean hasNextQuestion() {
+        return this.questionsIterator.hasNext();
+    }
+
+    @Override
+    public QuizMatchDescriptor getQuizMatch() {
+        return (QuizMatchDescriptor)this.activeQuizMatch.getDescriptor();
     }
     
     

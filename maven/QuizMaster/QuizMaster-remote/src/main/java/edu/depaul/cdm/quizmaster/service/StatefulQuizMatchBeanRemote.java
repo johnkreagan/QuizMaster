@@ -6,6 +6,7 @@
 package edu.depaul.cdm.QuizMaster.service;
 
 import edu.depaul.cdm.QuizMaster.DTODescriptor.QuestionDescriptor;
+import edu.depaul.cdm.QuizMaster.DTODescriptor.QuizMatchDescriptor;
 import javax.ejb.Remote;
 
 /**
@@ -21,6 +22,10 @@ public interface StatefulQuizMatchBeanRemote  {
 
     QuestionDescriptor goToNextQuestion();
 
+    boolean hasNextQuestion();
+    
     Long submitAnswer(Long answerID);
+
+    public QuizMatchDescriptor getQuizMatch();
     
 }

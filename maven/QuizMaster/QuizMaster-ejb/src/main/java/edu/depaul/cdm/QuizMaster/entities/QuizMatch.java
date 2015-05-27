@@ -5,9 +5,13 @@
  */
 package edu.depaul.cdm.QuizMaster.entities;
 
+import edu.depaul.cdm.QuizMaster.DTODescriptor.AnswerDescriptor;
 import edu.depaul.cdm.QuizMaster.DTODescriptor.Descriptor;
 import edu.depaul.cdm.QuizMaster.DTODescriptor.IDescriptable;
+import edu.depaul.cdm.QuizMaster.DTODescriptor.PlayerDescriptor;
+import edu.depaul.cdm.QuizMaster.DTODescriptor.QuestionDescriptor;
 import edu.depaul.cdm.QuizMaster.DTODescriptor.QuizMatchDescriptor;
+import edu.depaul.cdm.QuizMaster.DTODescriptor.QuizResult;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,6 +25,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 /**
  *
@@ -52,6 +57,9 @@ public class QuizMatch implements IDescriptable, Serializable {
     
     @Column
     private int score;
+    
+    @Transient
+    private QuizResult result;
     
     public QuizMatch() {
         this.answers = new ArrayList<>();
@@ -117,6 +125,16 @@ public class QuizMatch implements IDescriptable, Serializable {
         this.score = score;
     }
 
+    public QuizResult getResult() {
+        return result;
+    }
+
+    public void setResult(QuizResult result) {
+        this.result = result;
+    }
+
+    
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -149,11 +167,26 @@ public class QuizMatch implements IDescriptable, Serializable {
         qmd.setId(this.getId());
         qmd.setName("QuizMatchID: " + this.getId());
         
+        qmd.setQuiz((this.getQuiz() != null) ?  this.getQuiz().getDescriptor() : null);
+        if (this.getPlayer() != null) {
+            qmd.setPlayer((PlayerDescriptor)this.getPlayer().getDescriptor());
+        }
+        
         for(Answer answer : this.getAnswers()) {
-            
+            qmd.addAnswer((QuestionDescriptor)answer.getQuestion().getDescriptor(), (AnswerDescriptor)answer.getDescriptor());
         }
         
         return qmd;
+    }
+
+    public void processResults() {
+        
+        this.setResult(this.getQuiz().getResults(this.getAnswers()));
+        
+    }
+    
+    public QuizResult getResults() {
+        return this.getResult();
     }
     
 }
