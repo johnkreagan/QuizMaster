@@ -16,5 +16,7 @@ import javax.ejb.Remote;
 public interface QuizMasterHighScoreTrackerSingletonRemote {
 
     void submitScoredQuizMatch(QuizMatchDescriptor scoredQuizMatch);
+
+    List<QuizMatchDescriptor> getHighScores();
     
 }

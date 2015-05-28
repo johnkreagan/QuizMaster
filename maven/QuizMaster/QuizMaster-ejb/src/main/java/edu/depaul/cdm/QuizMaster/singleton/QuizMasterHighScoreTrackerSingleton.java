@@ -36,6 +36,11 @@ public class QuizMasterHighScoreTrackerSingleton implements QuizMasterHighScoreT
         
         
     }
+
+    @Override
+    public List<QuizMatchDescriptor> getHighScores() {
+        return null;
+    }
     
     
     
