@@ -27,5 +27,7 @@ public interface StatefulQuizMatchBeanRemote  {
     Long submitAnswer(Long answerID);
 
     public QuizMatchDescriptor getQuizMatch();
+
+    void submitQuizMatchForGrading();
     
 }

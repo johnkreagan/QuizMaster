@@ -58,7 +58,9 @@ public class TakeQuizStatefulServlet extends HttpServlet {
             if (quizBean.hasNextQuestion()) {
                 quizBean.goToNextQuestion();
             } else {
+                quizBean.submitQuizMatchForGrading();;
                 request.setAttribute("quizMatch", quizBean.getQuizMatch());
+                request.setAttribute("results", this);
                 request.getServletContext().getRequestDispatcher("/TakeQuizStatefulDone.jsp").forward(request, response);
                 return;
             }

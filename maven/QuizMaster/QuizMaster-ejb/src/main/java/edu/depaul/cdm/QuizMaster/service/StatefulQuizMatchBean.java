@@ -14,6 +14,7 @@ import edu.depaul.cdm.QuizMaster.entities.Quiz;
 import edu.depaul.cdm.QuizMaster.entities.QuizMatch;
 import java.util.ListIterator;
 import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
@@ -86,6 +87,15 @@ public class StatefulQuizMatchBean implements StatefulQuizMatchBeanRemote {
     public QuizMatchDescriptor getQuizMatch() {
         return (QuizMatchDescriptor)this.activeQuizMatch.getDescriptor();
     }
+
+    @Override
+    public void submitQuizMatchForGrading() {
+        //tHIS PERSISTS TO db, BUT DOEST RETURN. oF COURSE RESULTS ARE NULL
+        
+        this.activeQuizMatch.processResults();
+    }
+    
+    
     
     
     

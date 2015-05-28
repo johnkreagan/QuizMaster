@@ -5,10 +5,12 @@
  */
 package edu.depaul.cdm.QuizMaster.entities;
 
+import edu.depaul.cdm.QuizMaster.DTODescriptor.AnswerDescriptor;
 import edu.depaul.cdm.QuizMaster.DTODescriptor.QuizDescriptor;
 import edu.depaul.cdm.QuizMaster.DTODescriptor.QuizDescriptor.QuizType;
 import edu.depaul.cdm.QuizMaster.DTODescriptor.QuizResult;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -71,7 +73,29 @@ public class ScoredQuiz extends Quiz implements Serializable {
 
     @Override
     public QuizResult getResults(List<Answer> answers) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        
+        List<Answer> correctAnswerList = new ArrayList<>();
+        List<Answer> incorrectAnswerList = new ArrayList<>();
+        
+        for (Answer answer : answers) {
+            if (answer.isCorrectAnswer()) {
+                correctAnswerList.add(answer);
+            } else {
+                incorrectAnswerList.add(answer);
+            }
+        }
+        
+        int questionCount = this.getQuestions().size();
+
+        QuizResult qr = new QuizResult();
+        
+        qr.setScore(correctAnswerList.size());
+        
+       qr.setDetail("Answered " + correctAnswerList.size() + " of " + questionCount + " correctly.");
+        
+        
+        return qr;
     }
     
     

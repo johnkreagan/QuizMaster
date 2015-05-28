@@ -26,6 +26,8 @@ public class QuizMatchDescriptor extends Descriptor {
     
     private Map<QuestionDescriptor,AnswerDescriptor> answers;
 
+    private QuizResult result;
+    
     public QuizDescriptor getQuiz() {
         return quiz;
     }
@@ -52,6 +54,14 @@ public class QuizMatchDescriptor extends Descriptor {
     
     public void addAnswer(QuestionDescriptor question, AnswerDescriptor answer) {
         this.answers.put(question, answer);
+    }
+
+    public QuizResult getResult() {
+        return result;
+    }
+
+    public void setResult(QuizResult result) {
+        this.result = result;
     }
     
     

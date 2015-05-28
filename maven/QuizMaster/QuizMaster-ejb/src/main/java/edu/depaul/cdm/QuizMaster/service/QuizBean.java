@@ -213,5 +213,11 @@ public class QuizBean implements QuizBeanRemote {
     public void addDefaultQuestions() {
         this.setupHistoryQuiz();
     }
+
+    @Override
+    public QuizDescriptor GetQuiz(long quizID) {
+        Quiz q = this.entityManager.find(Quiz.class, quizID);
+        return q.getDescriptor();
+    }
     
 }

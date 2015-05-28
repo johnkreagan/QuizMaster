@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.depaul.cdm.QuizMaster.service;
+package edu.depaul.cdm.QuizMaster.singleton;
 
-import edu.depaul.cdm.QuizMaster.DTODescriptor.QuizResult;
+import edu.depaul.cdm.QuizMaster.DTODescriptor.QuizMatchDescriptor;
 import javax.ejb.Remote;
 
 /**
@@ -13,8 +13,8 @@ import javax.ejb.Remote;
  * @author John
  */
 @Remote
-public interface QuizMatchGraderSingletonRemote {
+public interface QuizMasterHighScoreTrackerSingletonRemote {
 
-    QuizResult submitQuizMatchForGrading(Long quizMatchID);
+    void submitScoredQuizMatch(QuizMatchDescriptor scoredQuizMatch);
     
 }

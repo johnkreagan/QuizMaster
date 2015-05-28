@@ -47,24 +47,29 @@ public class CreateQuizServlet extends HttpServlet {
             type = (type == null) ? "" : type;
             Long quizID = quizBean.createQuiz(name, type);
             request.setAttribute("quizID", quizID);
-            
+            request.setAttribute("currentQuiz",quizBean.getCurrentQuiz());
             request.getServletContext().getRequestDispatcher("/AddQuestion.jsp").forward(request, response);
             return;
         } else if (action.equals("Add Question")) {
             
             String questionText = request.getParameter("questionText");
             
+            Integer correctAnswerIndex = Integer.parseInt(request.getParameter("correctAnswer"));
             Long questionID = quizBean.addQuestion(questionText);
             
             String answerText;
+            Long returnedAnswerID;
             for (int i = 0; i < 4; i++) {
                 answerText = request.getParameter("answerText_" + i);
                 if (answerText != null && answerText.length() > 0) {
-                    quizBean.addAnswer(questionID, answerText);
+                    returnedAnswerID = quizBean.addAnswer(questionID, answerText);
+                    if (i == correctAnswerIndex) {
+                        quizBean.setCorrectAnswer(questionID, returnedAnswerID);
+                    }
                 }
             }
             
-            
+            request.setAttribute("currentQuiz",quizBean.getCurrentQuiz());
             request.getServletContext().getRequestDispatcher("/AddQuestion.jsp").forward(request, response);
             return;
         } else if (action.equals("Done")) {
@@ -73,6 +78,7 @@ public class CreateQuizServlet extends HttpServlet {
             request.getServletContext().getRequestDispatcher("/CreateQuizDone.jsp").forward(request, response);
             return;
         }   
+        
         request.getServletContext().getRequestDispatcher("/CreateQuiz.jsp").forward(request, response);
         
     

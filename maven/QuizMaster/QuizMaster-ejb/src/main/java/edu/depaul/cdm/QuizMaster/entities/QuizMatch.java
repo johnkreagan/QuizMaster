@@ -176,6 +176,8 @@ public class QuizMatch implements IDescriptable, Serializable {
             qmd.addAnswer((QuestionDescriptor)answer.getQuestion().getDescriptor(), (AnswerDescriptor)answer.getDescriptor());
         }
         
+        qmd.setResult(this.getResult());
+        
         return qmd;
     }
 

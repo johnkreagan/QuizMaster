@@ -13,6 +13,8 @@
 <h2>${q.name}</h2>
     <h2>Question: <%= q.getName() %></h2>
     <h3>Count =  <%= answers.size() %></h3>
+    <h1>Score = <%= q.getResult() %></h1>
+    <p><%= q.getResult().getDetail() %></p>
     <ul>
         <c:forEach var="entry" begin="0" items="${quizMatch.getAnswers()}">
             <ol>${entry.key.getQuestionText()} - ${entry.value.answerText}</ol>
