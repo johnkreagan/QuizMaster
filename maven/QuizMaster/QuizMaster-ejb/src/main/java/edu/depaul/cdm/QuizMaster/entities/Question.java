@@ -23,12 +23,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author johnreagan
  */
 @Entity
+@XmlRootElement
 public class Question implements IDescriptable, Serializable {
     
     private static final long serialVersionUID = 1L;
@@ -93,6 +96,7 @@ public class Question implements IDescriptable, Serializable {
         this.questionText = text;
     }
 
+    @XmlTransient
     public List<Answer> getAnswers() {
         return answers;
     }

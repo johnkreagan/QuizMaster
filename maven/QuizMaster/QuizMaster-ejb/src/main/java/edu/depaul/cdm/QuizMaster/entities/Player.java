@@ -15,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -22,6 +23,7 @@ import javax.persistence.NamedQuery;
  */
 @Entity
 @NamedQuery(name="findAllPlayers", query="SELECT p FROM Player p")
+@XmlRootElement
 public class Player implements IDescriptable, Serializable {
     private static final long serialVersionUID = 1L;
     @Id

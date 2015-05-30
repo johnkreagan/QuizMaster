@@ -17,6 +17,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -24,6 +25,7 @@ import javax.persistence.Id;
  */
 @Entity
 @DiscriminatorValue(ScoredQuiz.DISCRIMINATOR_VALUE)
+@XmlRootElement
 public class ScoredQuiz extends Quiz implements Serializable {
     
     public static final String DISCRIMINATOR_VALUE = "SCORED";

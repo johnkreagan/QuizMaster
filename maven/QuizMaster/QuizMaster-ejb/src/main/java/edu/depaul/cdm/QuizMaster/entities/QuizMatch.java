@@ -26,12 +26,15 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author John
  */
 @Entity
+@XmlRootElement
 public class QuizMatch implements IDescriptable, Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -97,6 +100,7 @@ public class QuizMatch implements IDescriptable, Serializable {
         this.dateCreated = dateCreated;
     }
     
+    @XmlTransient
     public List<Answer> getAnswers() {
         return answers;
     }

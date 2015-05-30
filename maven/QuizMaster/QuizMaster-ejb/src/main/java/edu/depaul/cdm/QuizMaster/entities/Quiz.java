@@ -24,6 +24,8 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -33,6 +35,7 @@ import javax.persistence.OneToMany;
 @NamedQuery(name="findAllQuizzes", query="SELECT q FROM Quiz q")
 @Inheritance
 @DiscriminatorColumn(name="QUIZ_TYPE")
+@XmlRootElement
 public abstract class Quiz implements Serializable, IDescriptable {
     
     private static final long serialVersionUID = 1L;
@@ -59,6 +62,7 @@ public abstract class Quiz implements Serializable, IDescriptable {
      *
      * @return the value of Questions
      */
+    @XmlTransient
     public List<Question> getQuestions() {
         return questions;
     }
