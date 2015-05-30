@@ -13,9 +13,9 @@ import java.io.Serializable;
  */
 public abstract class Descriptor implements Serializable {
     
-    public Long id;
+    private Long id;
     
-    public String name;
+    private String name;
     
     public Long getId() {
         return id;

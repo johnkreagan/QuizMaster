@@ -85,8 +85,8 @@ public abstract class Quiz implements Serializable, IDescriptable {
         
         QuizDescriptor qd = new QuizDescriptor();
         
-        qd.id = this.getId();
-        qd.name = this.getQuizName();
+        qd.setId(this.getId());
+        qd.setName(this.getQuizName());
 
         for (Question question : this.getQuestions()) {
             qd.addQuestion((QuestionDescriptor)question.getDescriptor());
