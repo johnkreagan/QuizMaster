@@ -22,6 +22,9 @@ import javax.ejb.Stateful;
 import javax.jms.JMSException;
 import javax.jms.MessageProducer;
 import javax.jms.ObjectMessage;
+import javax.jms.Queue;
+import javax.jms.QueueConnection;
+import javax.jms.QueueConnectionFactory;
 import javax.jms.Session;
 import javax.jms.Topic;
 import javax.jms.TopicConnection;
@@ -101,9 +104,11 @@ public class StatefulQuizMatchBean implements StatefulQuizMatchBeanRemote {
     public void submitQuizMatchForGrading() {
         //tHIS PERSISTS TO db, BUT DOEST RETURN. oF COURSE RESULTS ARE NULL
         
+        this.getGradedTimeStamp();
+        
         this.activeQuizMatch.processResults();
         
-        this.notifyQuizMatchCompleteObservers();;
+        this.notifyQuizMatchCompleteObservers();
         
     }
     
@@ -111,6 +116,11 @@ public class StatefulQuizMatchBean implements StatefulQuizMatchBeanRemote {
     private Topic topic;
     @Resource(mappedName = "jms/QuizMasterConnectionFactory")
     private TopicConnectionFactory topicConnectionFactory;
+    
+    @Resource(mappedName = "jms/QuizMasterQuizMatchTimeStampQueue")
+    private Queue queue;
+    @Resource(mappedName = "jms/QuizMasterConnectionFactory")
+    private QueueConnectionFactory queueConnectionFactory;
     
     
     @Override
@@ -127,6 +137,35 @@ public class StatefulQuizMatchBean implements StatefulQuizMatchBeanRemote {
             session = topicConnection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
             MessageProducer mp = session.createProducer(topic);
+
+//            StringBuilder builder = new StringBuilder();
+//            builder.append(request.getParameter("fromAccount"));
+//            builder.append(";");
+//            builder.append(request.getParameter("toAccount"));
+//            builder.append(";");
+//            builder.append(request.getParameter("amount"));
+            
+            ObjectMessage om = session.createObjectMessage();
+            om.setObject(this.activeQuizMatch.getDescriptor());
+            mp.send(om);
+            
+        } catch (JMSException ex) {
+            Logger.getLogger(StatefulQuizMatchBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+
+    private void getGradedTimeStamp() {
+       
+        try {
+        
+            QueueConnection queueConnection = queueConnectionFactory.createQueueConnection();
+            queueConnection.start();
+            Session session;
+        
+            session = queueConnection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+
+            MessageProducer mp = session.createProducer(queue);
 
 //            StringBuilder builder = new StringBuilder();
 //            builder.append(request.getParameter("fromAccount"));
