@@ -30,4 +30,6 @@ public interface StatefulQuizMatchBeanRemote  {
 
     void submitQuizMatchForGrading();
     
+    void notifyQuizMatchCompleteObservers(); 
+    
 }

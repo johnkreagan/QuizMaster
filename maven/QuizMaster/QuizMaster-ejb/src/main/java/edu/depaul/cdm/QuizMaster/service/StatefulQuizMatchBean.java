@@ -13,10 +13,19 @@ import edu.depaul.cdm.QuizMaster.entities.Question;
 import edu.depaul.cdm.QuizMaster.entities.Quiz;
 import edu.depaul.cdm.QuizMaster.entities.QuizMatch;
 import java.util.ListIterator;
+import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.Remote;
 import javax.ejb.Stateful;
+import javax.jms.JMSException;
+import javax.jms.MessageProducer;
+import javax.jms.ObjectMessage;
+import javax.jms.Session;
+import javax.jms.Topic;
+import javax.jms.TopicConnection;
+import javax.jms.TopicConnectionFactory;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -93,9 +102,48 @@ public class StatefulQuizMatchBean implements StatefulQuizMatchBeanRemote {
         //tHIS PERSISTS TO db, BUT DOEST RETURN. oF COURSE RESULTS ARE NULL
         
         this.activeQuizMatch.processResults();
+        
+        this.notifyQuizMatchCompleteObservers();;
+        
     }
     
+    @Resource(mappedName = "jms/QuizMasterNewQuizMatchCompletedTopic")
+    private Topic topic;
+    @Resource(mappedName = "jms/QuizMasterConnectionFactory")
+    private TopicConnectionFactory topicConnectionFactory;
     
+    
+    @Override
+    public void notifyQuizMatchCompleteObservers() {
+        
+        
+        try {
+            
+            
+        TopicConnection topicConnection = topicConnectionFactory.createTopicConnection();
+            topicConnection.start();
+            Session session;
+        
+            session = topicConnection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+
+            MessageProducer mp = session.createProducer(topic);
+
+//            StringBuilder builder = new StringBuilder();
+//            builder.append(request.getParameter("fromAccount"));
+//            builder.append(";");
+//            builder.append(request.getParameter("toAccount"));
+//            builder.append(";");
+//            builder.append(request.getParameter("amount"));
+            
+            ObjectMessage om = session.createObjectMessage();
+            om.setObject(this.activeQuizMatch.getDescriptor());
+            mp.send(om);
+            
+        } catch (JMSException ex) {
+            Logger.getLogger(StatefulQuizMatchBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
     
     
     

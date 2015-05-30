@@ -16,10 +16,10 @@ import javax.jms.MessageListener;
  */
 @MessageDriven(activationConfig = {
     @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Topic"),
-    @ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = "jms/QuizMasterNewQuizTopic"),
-    @ActivationConfigProperty(propertyName = "subscriptionDurability", propertyValue = "durable"),
-    @ActivationConfigProperty(propertyName = "clientId", propertyValue = "jms/QuizMasterNewQuizTopic"),
-    @ActivationConfigProperty(propertyName = "subscriptionName", propertyValue = "jms/QuizMasterNewQuizTopic")
+    @ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = "jms/QuizMasterNewQuizMatchCompletedTopic"),
+    //@ActivationConfigProperty(propertyName = "subscriptionDurability", propertyValue = "durable"),
+    @ActivationConfigProperty(propertyName = "clientId", propertyValue = "jms/QuizMasterNewQuizMatchCompletedTopic"),
+    @ActivationConfigProperty(propertyName = "subscriptionName", propertyValue = "jms/QuizMasterNewQuizMatchCompletedTopic")
 })
 public class QuizMatchCompleteNotifyStaffBean implements MessageListener {
     

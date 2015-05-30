@@ -5,11 +5,14 @@
  */
 package edu.depaul.cdm.servlet;
 
+import edu.depaul.cdm.QuizMasterRemote.QuizBeanRemote;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.annotation.Resource;
+import javax.ejb.EJB;
 import javax.jms.JMSException;
 import javax.jms.MessageProducer;
+import javax.jms.ObjectMessage;
 import javax.jms.Queue;
 import javax.jms.QueueConnection;
 import javax.jms.QueueConnectionFactory;
@@ -39,6 +42,9 @@ public class NewQuizMessageServlet extends HttpServlet {
     @Resource(mappedName = "jms/QuizMasterConnectionFactory")
     private TopicConnectionFactory topicConnectionFactory;
     
+    @EJB
+    private QuizBeanRemote quizBean;
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -59,15 +65,16 @@ public class NewQuizMessageServlet extends HttpServlet {
             Session session = topicConnection.createSession(false, Session.AUTO_ACKNOWLEDGE);
             MessageProducer mp = session.createProducer(topic);
 
-            StringBuilder builder = new StringBuilder();
-            builder.append(request.getParameter("fromAccount"));
-            builder.append(";");
-            builder.append(request.getParameter("toAccount"));
-            builder.append(";");
-            builder.append(request.getParameter("amount"));
-            TextMessage msg = session.createTextMessage(builder.toString());
-
-            mp.send(msg);
+//            StringBuilder builder = new StringBuilder();
+//            builder.append(request.getParameter("fromAccount"));
+//            builder.append(";");
+//            builder.append(request.getParameter("toAccount"));
+//            builder.append(";");
+//            builder.append(request.getParameter("amount"));
+            
+            ObjectMessage om = session.createObjectMessage();
+            om.setObject(quizBean.GetQuiz(1L));
+            mp.send(om);
             
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");

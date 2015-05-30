@@ -6,6 +6,7 @@
 package edu.depaul.cdm.QuizMaster.singleton;
 
 import edu.depaul.cdm.QuizMaster.DTODescriptor.QuizMatchDescriptor;
+import java.util.List;
 import javax.ejb.Remote;
 
 /**
