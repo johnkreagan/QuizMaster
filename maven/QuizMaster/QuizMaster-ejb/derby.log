@@ -1,10 +1,13 @@
 ----------------------------------------------------------------
-Sun May 17 15:40:57 CDT 2015:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.9.1.0 - (1344872): instance a816c00e-014d-639b-afde-0000075ebcb8 
-on database directory C:\Users\John\AppData\Local\Temp\gfembed2710692497087058203tmp\lib\databases\embedded_default  with class loader sun.misc.Launcher$AppClassLoader@2a85f3d6 
-Loaded from file:/C:/Users/John/.m2/repository/org/glassfish/main/extras/glassfish-embedded-all/4.0-b90/glassfish-embedded-all-4.0-b90.jar
+Mon Jun 01 21:25:24 CDT 2015:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instance a816c00e-014d-b216-7102-00000b697d90 
+on database directory /private/var/folders/q2/dl176j1s4370vck44msq03q40000gn/T/gfembed1538622665927882671tmp/lib/databases/embedded_default with class loader sun.misc.Launcher$AppClassLoader@1c45484a 
+Loaded from file:/Users/johnreagan/.m2/repository/org/glassfish/main/extras/glassfish-embedded-all/4.1/glassfish-embedded-all-4.1.jar
 java.vendor=Oracle Corporation
-java.runtime.version=1.7.0_17-b02
-user.dir=C:\Users\John\Documents\GitHub\QuizMaster\maven\QuizMaster\QuizMaster-ejb
+java.runtime.version=1.7.0_55-b13
+user.dir=/Users/johnreagan/Documents/workspace/QuizMaster/maven/QuizMaster/QuizMaster-ejb
+os.name=Mac OS X
+os.arch=x86_64
+os.version=10.10.3
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''

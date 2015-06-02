@@ -11,5 +11,6 @@
     <module>QuizMaster-web</module>
     <module>QuizMaster-ejb</module>
     <module>QuizMaster-remote</module>
+    <module>QuizMaster-mdb</module>
   </modules>
 </project>

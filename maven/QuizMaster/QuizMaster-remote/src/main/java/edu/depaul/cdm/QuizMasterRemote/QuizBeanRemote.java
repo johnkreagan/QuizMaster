@@ -21,9 +21,9 @@ public interface QuizBeanRemote extends Serializable {
 
     long CreateQuiz(String name, int type);
     
-    long AddQuestion(long quizID, String questionTitle, float questionWeight);
+    long AddQuestion(long quizID, String questionTitle);
     
-    long AddAnswer(long questionID, String answerText, float answerValue);
+    long AddAnswer(long questionID, String answerText);
     
     void SetCorrectAnswer(long questionID, long answerID);
     

@@ -31,13 +31,13 @@ public class QuizService {
     }
 
     @WebMethod(operationName = "AddQuestion")
-    public long AddQuestion(@WebParam(name = "quizID") long quizID, @WebParam(name = "questionTitle") String questionTitle, @WebParam(name = "questionWeight") float questionWeight) {
-        return ejbRef.AddQuestion(quizID, questionTitle, questionWeight);
+    public long AddQuestion(@WebParam(name = "quizID") long quizID, @WebParam(name = "questionTitle") String questionTitle) {
+        return ejbRef.AddQuestion(quizID, questionTitle);
     }
 
     @WebMethod(operationName = "AddAnswer")
-    public long AddAnswer(@WebParam(name = "questionID") long questionID, @WebParam(name = "answerText") String answerText, @WebParam(name = "answerValue") float answerValue) {
-        return ejbRef.AddAnswer(questionID, answerText, answerValue);
+    public long AddAnswer(@WebParam(name = "questionID") long questionID, @WebParam(name = "answerText") String answerText) {
+        return ejbRef.AddAnswer(questionID, answerText);
     }
 
     @WebMethod(operationName = "SetCorrectAnswer")

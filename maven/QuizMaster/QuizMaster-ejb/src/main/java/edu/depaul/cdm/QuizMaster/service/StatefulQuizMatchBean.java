@@ -137,13 +137,6 @@ public class StatefulQuizMatchBean implements StatefulQuizMatchBeanRemote {
             session = topicConnection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
             MessageProducer mp = session.createProducer(topic);
-
-//            StringBuilder builder = new StringBuilder();
-//            builder.append(request.getParameter("fromAccount"));
-//            builder.append(";");
-//            builder.append(request.getParameter("toAccount"));
-//            builder.append(";");
-//            builder.append(request.getParameter("amount"));
             
             ObjectMessage om = session.createObjectMessage();
             om.setObject(this.activeQuizMatch.getDescriptor());
@@ -166,13 +159,6 @@ public class StatefulQuizMatchBean implements StatefulQuizMatchBeanRemote {
             session = queueConnection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
             MessageProducer mp = session.createProducer(queue);
-
-//            StringBuilder builder = new StringBuilder();
-//            builder.append(request.getParameter("fromAccount"));
-//            builder.append(";");
-//            builder.append(request.getParameter("toAccount"));
-//            builder.append(";");
-//            builder.append(request.getParameter("amount"));
             
             ObjectMessage om = session.createObjectMessage();
             om.setObject(this.activeQuizMatch.getDescriptor());

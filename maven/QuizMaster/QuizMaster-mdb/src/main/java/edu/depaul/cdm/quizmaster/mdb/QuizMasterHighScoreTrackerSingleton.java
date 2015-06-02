@@ -3,11 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.depaul.cdm.QuizMaster.singleton;
+package edu.depaul.cdm.quizmaster.mdb;
 
 import edu.depaul.cdm.QuizMaster.singleton.QuizMasterHighScoreTrackerSingletonRemote;
 import edu.depaul.cdm.QuizMaster.DTODescriptor.QuizMatchDescriptor;
 import edu.depaul.cdm.QuizMaster.entities.QuizMatch;
+import edu.depaul.cdm.QuizMaster.singleton.QuizMasterHighScoreTrackerSingletonRemote;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.ActivationConfigProperty;

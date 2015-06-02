@@ -99,12 +99,7 @@ public class QuizMatchBean implements  Serializable, QuizMatchRemote  {
         entityManager.persist(qm);
         return qm;
     }
-    
-//    public QuizMatch StartQuizMatch(long playerID, long quizID) {
-//        Quiz q = entityManager.find(Quiz.class, quizID);
-//        Player p = entityManager.find(Player.class, playerID);
-//        return this.StartQuizMatch(p, q);
-//    }    
+      
     
     public void GradeQuizMatch(QuizMatch qm) {
         

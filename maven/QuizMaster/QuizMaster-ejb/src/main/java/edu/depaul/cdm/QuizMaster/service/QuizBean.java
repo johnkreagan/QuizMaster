@@ -170,7 +170,7 @@ public class QuizBean implements QuizBeanRemote {
     }
 
     @Override
-    public long AddQuestion(long quizID, String questionTitle, float questionWeight) {
+    public long AddQuestion(long quizID, String questionTitle) {
        
         Quiz q = this.entityManager.find(Quiz.class, quizID);
         
@@ -185,7 +185,7 @@ public class QuizBean implements QuizBeanRemote {
     }
 
     @Override
-    public long AddAnswer(long questionID, String answerText, float answerValue) {
+    public long AddAnswer(long questionID, String answerText) {
         Question q = this.entityManager.find(Question.class, questionID);
         
         Answer aw = new Answer();
