@@ -152,5 +152,11 @@ public class Question implements IDescriptable, Serializable {
         
         return ques;
     }
+
+    public void addAnswer(Answer aw) {
+       
+        this.answers.add(aw);
+        
+    }
     
 }

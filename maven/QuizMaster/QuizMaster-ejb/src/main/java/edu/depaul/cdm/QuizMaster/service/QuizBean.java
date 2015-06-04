@@ -177,7 +177,7 @@ public class QuizBean implements QuizBeanRemote {
         Question question = new Question();
         question.setQuestionText(questionTitle);
         question.setQuiz(q);
-        
+        q.addQuestion(question);
         
         this.entityManager.persist(question);
         return question.getId();
@@ -191,6 +191,8 @@ public class QuizBean implements QuizBeanRemote {
         Answer aw = new Answer();
         aw.setAnswerText(answerText);
         aw.setQuestion(q);
+        
+        q.addAnswer(aw);
         
         this.entityManager.persist(aw);
         

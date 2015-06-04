@@ -5,6 +5,8 @@
  */
 package edu.depaul.cdm.QuizMaster.service;
 
+import edu.depaul.cdm.QuizMaster.DTODescriptor.QuestionDescriptor;
+import edu.depaul.cdm.QuizMaster.DTODescriptor.QuizDescriptor;
 import edu.depaul.cdm.QuizMasterRemote.QuizBeanRemote;
 import java.io.File;
 import java.util.List;
@@ -33,9 +35,7 @@ public class QuizBeanTest {
     
     private static EJBContainer ec;
     private static Context ctx;
-    
-    @EJB
-    private QuizBean quizBean;
+    private QuizBeanRemote quizBean;
     
     @BeforeClass
     public static void setUpClass() throws NamingException {
@@ -52,6 +52,7 @@ public class QuizBeanTest {
         while (list.hasMore()) {
           System.out.println(list.next().getName());
         }
+        
     }
     
     @AfterClass
@@ -59,31 +60,91 @@ public class QuizBeanTest {
     }
     
     @Before
-    public void setUp() {
+    public void setUp() throws NamingException {
+        quizBean = (QuizBeanRemote)ctx.lookup("java:global/classes/QuizBean");
+        
     }
     
     @After
     public void tearDown() {
+        
     }
 
     @Test
+    public void testCreateQuiz() {
+        
+        String name = "New Quiz";
+        
+        long id = quizBean.CreateQuiz(name, 1);
+        
+        List<QuizDescriptor> quizzes = quizBean.GetAllQuizzes();
+        
+        assert(quizzes.isEmpty() == false);
+        //assert(quizzes..getName().equals(name));
+        assert(id > 0);
+    }
+    
+    
+    @Test
     public void testGetAllQuizzes() throws Exception {
         
+        assert(quizBean.GetAllQuizzes().isEmpty());
         
+        quizBean.CreateQuiz("Quiz 1", 1);
         
-        QuizBeanRemote qbr = (QuizBeanRemote)ctx.lookup("java:global/classes/QuizBean");
+        quizBean.CreateQuiz("Quiz 2", 1);
         
-        qbr.CreateQuiz("Quiz 1", 1);
+        quizBean.CreateQuiz("Quiz 3", 1);
         
-        qbr.CreateQuiz("Quiz 2", 1);
-        
-        qbr.CreateQuiz("Quiz 3", 1);
-        
-        assert(qbr.GetAllQuizzes().size() > 0);
+        assert(quizBean.GetAllQuizzes().size() > 0);
         
     }
+    
+    @Test
+    public void testAddQuestion() {
+        
+        long quizID = quizBean.CreateQuiz("Quiz 1", 1);
+        
+        long question1ID = quizBean.AddQuestion(quizID, "Question 1");
+        assert(question1ID > 0);
+        
+        long question2ID = quizBean.AddQuestion(quizID, "Question 1");
+        
+        assert(question2ID > 0);
+        
+        QuizDescriptor qd = quizBean.GetQuiz(quizID);
+        
+        assert(qd.getQuestions().isEmpty() == false);
+        assert(qd.getQuestions().size() == 2);
+        
+    }
+    
+    @Test
+    public void testAddAnswer() {
+        
+        long quizID = quizBean.CreateQuiz("Quiz 1", 1);
+        
+        long question1ID = quizBean.AddQuestion(quizID, "Question 1");
+        
+        long answer1ID = quizBean.AddAnswer(question1ID, "Answer Test 1");
+        long answer2ID = quizBean.AddAnswer(question1ID, "Answer Test 2");
+        
+        QuizDescriptor qd = quizBean.GetQuiz(quizID);
+        
+        QuestionDescriptor questionD = qd.getQuestions().get(0);
+        
+        assert(questionD.getAnswers().isEmpty() == false);
+        assert(questionD.getAnswers().size() == 2);
+        
+        
+        
+    }
+    
+}
+    
+    
     
 
     
     
-}
+
