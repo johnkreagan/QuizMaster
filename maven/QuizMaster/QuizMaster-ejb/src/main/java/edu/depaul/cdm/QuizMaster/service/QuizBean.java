@@ -14,6 +14,8 @@ import edu.depaul.cdm.QuizMaster.DTODescriptor.PlayerDescriptor;
 import edu.depaul.cdm.QuizMasterRemote.QuizBeanRemote;
 import edu.depaul.cdm.QuizMaster.DTODescriptor.QuizDescriptor;
 import edu.depaul.cdm.QuizMaster.entities.ScoredQuiz;
+import edu.depaul.cdm.QuizMaster.entities.SurveyQuiz;
+import edu.depaul.cdm.QuizMaster.entities.SurveyQuizResultRange;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -158,8 +160,16 @@ public class QuizBean implements QuizBeanRemote {
     
     @Override
     public long CreateQuiz(String name, int type) {
-        
-        Quiz quiz = new ScoredQuiz();
+        Quiz quiz;
+        switch (type) {
+            case 1:
+                quiz = new SurveyQuiz();
+                break;
+            default:
+               quiz = new ScoredQuiz();
+                break;
+        }
+         
         quiz.setQuizName(name);
         
         this.entityManager.persist(quiz);
@@ -245,4 +255,22 @@ public class QuizBean implements QuizBeanRemote {
         
     }
     
+    @Override
+    public long AddSurveyRange(long quizID, String rangeText, int lowScore, int highScore) {
+        
+        SurveyQuiz q = (SurveyQuiz)this.entityManager.find(Quiz.class, quizID);
+        
+        SurveyQuizResultRange range = new SurveyQuizResultRange();
+        
+        range.setQuiz(q);
+        range.setMessage(rangeText);
+        range.setFloor(lowScore);
+        range.setCeiling(highScore);
+        
+        q.addRange(range);
+        
+        this.entityManager.persist(range);
+        
+        return range.getId();
+    }
 }

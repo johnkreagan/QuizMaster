@@ -25,6 +25,8 @@ public interface QuizBeanRemote extends Serializable {
     
     long AddAnswer(long questionID, String answerText);
     
+    long AddSurveyRange(long quizID, String rangeText, int lowScore, int highScore);
+    
     void SetCorrectAnswer(long questionID, long answerID);
     
     void DeleteQuiz(long quizID);

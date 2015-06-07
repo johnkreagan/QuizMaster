@@ -25,5 +25,9 @@
     <input type="submit" name="createQuizAction" value="Add Question" />
 </form>
 <br/>
+<% if(q.getType() == QuizType.Scored) { %>
 <a href="CreateQuiz?createQuizAction=Done">Finish</a>
+<%  } else { %>
+<a href="CreateQuiz?createQuizAction=SetupSurvey">Setup Survey</a>
+<% } %>
 <jsp:include page="WEB-INF/jspf/footer.jsp" />

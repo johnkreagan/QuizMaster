@@ -26,4 +26,5 @@ public interface StatefulQuizBeanRemote {
 
     public QuizDescriptor getCurrentQuiz();
     
+    Long addSurveyRange(String message, int low, int high);
 }

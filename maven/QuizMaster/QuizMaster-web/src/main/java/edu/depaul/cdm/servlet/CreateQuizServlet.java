@@ -72,6 +72,34 @@ public class CreateQuizServlet extends HttpServlet {
             request.setAttribute("currentQuiz",quizBean.getCurrentQuiz());
             request.getServletContext().getRequestDispatcher("/AddQuestion.jsp").forward(request, response);
             return;
+        } else if (action.equals("SetupSurvey")) {
+            
+            request.setAttribute("currentQuiz", quizBean.getCurrentQuiz());
+            request.getServletContext().getRequestDispatcher("/SurveySetup.jsp").forward(request, response);
+            return;
+        }else if(action.equals("AddSurveyRanges")) {
+            
+            String rangeText;
+            int rangeLow;
+            int rangeHigh;
+            for (int i = 1; i < 5; i++) {
+                try {
+                    rangeText = request.getParameter("range_" + i + "_text");
+                    rangeLow = Integer.parseInt(request.getParameter("range_" + i + "_low"));
+                    rangeHigh = Integer.parseInt(request.getParameter("range_" + i + "_high"));
+                    
+                    quizBean.addSurveyRange(rangeText, rangeLow, rangeHigh);
+                    
+                }catch(Exception e) {
+                    
+                }
+            }
+
+
+            //finish
+            request.setAttribute("currentQuiz", quizBean.getCurrentQuiz());
+            request.getServletContext().getRequestDispatcher("/CreateQuizDone.jsp").forward(request, response);
+            return;
         } else if (action.equals("Done")) {
         
             request.setAttribute("currentQuiz", this.quizBean.getCurrentQuiz());

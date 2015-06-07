@@ -79,10 +79,23 @@ public class SurveyQuiz extends Quiz implements Serializable {
         
         qr.setScore(correctAnswerList.size());
         
-       qr.setDetail("Answered " + correctAnswerList.size() + " of " + questionCount + " correctly.");
+        
+        
+       qr.setDetail("You are a " + this.GetRangeForScore(qr.getScore()).getMessage() + " --- Answered " + correctAnswerList.size() + " of " + questionCount + " correctly.");
         
         
         return qr;
     }
+    
+    public SurveyQuizResultRange GetRangeForScore(int score) {
+        
+        for(SurveyQuizResultRange range : ranges) {
+            if (range.getFloor() <= score && range.getCeiling() >= score) {
+                return range;
+            }
+        }
+        return null;
+    }
+    
     
 }
