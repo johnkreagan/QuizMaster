@@ -41,6 +41,8 @@ public class QuizMatchTimeStamperBean implements MessageListener {
         try {
             
             ObjectMessage om = (ObjectMessage)message;
+            
+            
             QuizMatchDescriptor qmd = (QuizMatchDescriptor)om.getObject();
             
             this.stampQuizMatch(qmd.getId());

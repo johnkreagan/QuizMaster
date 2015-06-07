@@ -47,7 +47,7 @@ public class Question implements IDescriptable, Serializable {
         this.id = id;
     }
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name="quiz_id")
     private Quiz quiz;
 

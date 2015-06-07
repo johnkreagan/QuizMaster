@@ -140,7 +140,53 @@ public class QuizBeanTest {
         
     }
     
-}
+    @Test
+    public void testDeleteQuiz() {
+        
+        long quizID = quizBean.CreateQuiz("NAME", 1);
+        
+        QuizDescriptor qd = quizBean.GetQuiz(quizID);
+        
+        assert(quizID == qd.getId());
+        
+        quizBean.DeleteQuiz(quizID);
+        
+        qd = quizBean.GetQuiz(quizID);
+        
+        assert(qd == null);
+ 
+    }
+    
+    @Test
+    public void testDeleteQuestion() {
+        
+        long quizID = quizBean.CreateQuiz("NAME", 1);
+        
+        long question1ID = quizBean.AddQuestion(quizID, "Question 1");
+        long question2ID = quizBean.AddQuestion(quizID, "QUestion 2");
+        
+        
+        QuizDescriptor qd = quizBean.GetQuiz(quizID);
+        
+        assert(qd.getQuestions().size() == 2);
+        
+        quizBean.DeleteQuestion(question1ID);
+        
+        qd = quizBean.GetQuiz(quizID);
+        
+        assert(qd.getQuestions().size() == 1);
+        
+        quizBean.DeleteQuestion(question2ID);
+        
+        qd = quizBean.GetQuiz(quizID);
+        
+        assert(qd.getQuestions().isEmpty());
+        
+        
+        
+    }
+    
+}   
     
     
     

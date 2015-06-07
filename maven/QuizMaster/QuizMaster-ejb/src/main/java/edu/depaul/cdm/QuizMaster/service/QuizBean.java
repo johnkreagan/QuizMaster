@@ -219,7 +219,30 @@ public class QuizBean implements QuizBeanRemote {
     @Override
     public QuizDescriptor GetQuiz(long quizID) {
         Quiz q = this.entityManager.find(Quiz.class, quizID);
-        return q.getDescriptor();
+        
+        return (q == null) ? null :q.getDescriptor();
+    }
+
+    @Override
+    public void DeleteQuiz(long quizID) {
+       
+        Quiz q = this.entityManager.find(Quiz.class, quizID);
+        
+        this.entityManager.remove(q);
+    }
+
+    @Override
+    public void DeleteQuestion(long questionID) {
+       
+        Question question = this.entityManager.find(Question.class, questionID);
+        Long quizID = question.getQuiz().getId();
+        this.entityManager.remove(question);
+        
+        Quiz q = this.entityManager.find(Quiz.class, quizID);
+        q.getQuestions().remove(question);
+        this.entityManager.merge(q);
+        
+        
     }
     
 }

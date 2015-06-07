@@ -27,6 +27,10 @@ public interface QuizBeanRemote extends Serializable {
     
     void SetCorrectAnswer(long questionID, long answerID);
     
+    void DeleteQuiz(long quizID);
+    
+    void DeleteQuestion(long questionID);
+    
     QuizDescriptor GetQuiz(long quizID);
     
     List<QuizDescriptor> GetAllQuizzes();

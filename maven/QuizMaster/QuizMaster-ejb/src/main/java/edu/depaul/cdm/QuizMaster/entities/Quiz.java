@@ -44,7 +44,7 @@ public abstract class Quiz implements Serializable, IDescriptable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToMany(mappedBy="quiz", cascade=CascadeType.PERSIST)
+    @OneToMany(mappedBy="quiz", cascade=CascadeType.REMOVE)
     private List<Question> questions = new ArrayList<>();
     
     private String quizName;
