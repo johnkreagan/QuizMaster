@@ -7,7 +7,6 @@ package edu.depaul.cdm.QuizMaster.service;
 
 import edu.depaul.cdm.QuizMaster.entities.Player;
 import edu.depaul.cdm.QuizMaster.entities.Quiz;
-import edu.depaul.cdm.QuizMaster.entities.QuizMatch;
 import edu.depaul.cdm.QuizMaster.entities.Answer;
 import edu.depaul.cdm.QuizMaster.entities.Question;
 import edu.depaul.cdm.QuizMaster.DTODescriptor.PlayerDescriptor;
@@ -16,29 +15,19 @@ import edu.depaul.cdm.QuizMaster.DTODescriptor.QuizDescriptor;
 import edu.depaul.cdm.QuizMaster.entities.ScoredQuiz;
 import edu.depaul.cdm.QuizMaster.entities.SurveyQuiz;
 import edu.depaul.cdm.QuizMaster.entities.SurveyQuizResultRange;
-import java.io.Serializable;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.Local;
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
-import javax.enterprise.context.SessionScoped;
-import javax.inject.Named;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
-import javax.transaction.Transaction;
-import javax.transaction.Transactional;
-import static javax.transaction.Transactional.TxType.REQUIRED;
 
 /**
  *
@@ -47,6 +36,7 @@ import static javax.transaction.Transactional.TxType.REQUIRED;
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 @Stateless
 //@Named("quizBean")
+@DeclareRoles("admin")
 @Remote(QuizBeanRemote.class)
 public class QuizBean implements QuizBeanRemote {
 
@@ -61,11 +51,12 @@ public class QuizBean implements QuizBeanRemote {
     
     
     //@Transactional
+    @PermitAll
    @Override
     public List<QuizDescriptor> GetAllQuizzes()  {
         logger.log(Level.INFO, "Pre Fetch all quizzes");
         //entityManager.getTransaction().begin();
-        List<QuizDescriptor> returnedQuizzes = new ArrayList<QuizDescriptor>();
+        List<QuizDescriptor> returnedQuizzes = new ArrayList<>();
         try     {
             List<Quiz> quizzes = entityManager.createQuery("SELECT q FROM Quiz q").getResultList();
             for(Quiz q : quizzes) {
@@ -158,6 +149,7 @@ public class QuizBean implements QuizBeanRemote {
        this.entityManager.merge(question);
     }
     
+    
     @Override
     public long CreateQuiz(String name, int type) {
         Quiz quiz;
@@ -233,6 +225,7 @@ public class QuizBean implements QuizBeanRemote {
         return (q == null) ? null :q.getDescriptor();
     }
 
+    @RolesAllowed("admin")
     @Override
     public void DeleteQuiz(long quizID) {
        
@@ -241,6 +234,7 @@ public class QuizBean implements QuizBeanRemote {
         this.entityManager.remove(q);
     }
 
+    @RolesAllowed("admin")
     @Override
     public void DeleteQuestion(long questionID) {
        
