@@ -72,12 +72,12 @@ public class QuizBeanTest {
         props.put(EJBContainer.MODULES, new File("target/classes"));
 //        props.put("org.glassfish.ejb.embedded.glassfish.installation.root", 
 //                "/Applications/Netbeans/glassfish-4.0/glassfish");
-        props.put("org.glassfish.ejb.embedded.glassfish.configuration.file", "/Applications/NetBeans/glassfish-4.0/glassfish/domains/domain1/config/domain.xml");
+        //props.put("org.glassfish.ejb.embedded.glassfish.configuration.file", "/Applications/NetBeans/glassfish-4.0/glassfish/domains/domain1/config/domain.xml");
         props.put("javax.enterprise.systemcore.security.level", 
                 "FINE");
 //        
         props.put("org.glassfish.ejb.embedded.glassfish.web.http.port","");
-        //props.put("org.glassfish.ejb.embedded.glassfish.instance.root", "./src/test/resources/testing-domain");
+        props.put("org.glassfish.ejb.embedded.glassfish.instance.root", "./src/test/resources/testing-domain");
         ec = EJBContainer.createEJBContainer(props);
 
         

@@ -6,6 +6,8 @@
 package edu.depaul.cdm.QuizMaster.service;
 
 import java.util.concurrent.Callable;
+import javax.annotation.security.DeclareRoles;
+import javax.annotation.security.RunAs;
 import javax.ejb.Local;
 
 /**
@@ -13,6 +15,8 @@ import javax.ejb.Local;
  * @author johnreagan
  */
 @Local
+@DeclareRoles("admin") 
+@RunAs("admin")
 public interface AdminTestBeanLocal {
     public <V> V call(Callable<V> callable) throws Exception;
 }

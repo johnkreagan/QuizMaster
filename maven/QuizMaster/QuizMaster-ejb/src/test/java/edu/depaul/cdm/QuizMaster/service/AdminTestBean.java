@@ -6,6 +6,7 @@
 package edu.depaul.cdm.QuizMaster.service;
 
 import java.util.concurrent.Callable;
+import javax.annotation.security.DeclareRoles;
 import javax.annotation.security.RunAs;
 import javax.ejb.Stateless;
 
@@ -14,6 +15,7 @@ import javax.ejb.Stateless;
  * @author johnreagan
  */
 @Stateless
+@DeclareRoles("admin") 
 @RunAs("admin")
 public class AdminTestBean implements AdminTestBeanLocal {
 
