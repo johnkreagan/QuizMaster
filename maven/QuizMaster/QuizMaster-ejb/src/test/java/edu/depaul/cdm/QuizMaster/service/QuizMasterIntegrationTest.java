@@ -282,8 +282,6 @@ public class QuizMasterIntegrationTest {
         
         assert(highScore.getScoresForQuizID(1L).size() == 1);
         highScore.addHighScore(qd, qr2);
-        assert(highScore.getScoresForQuizID(1L).size() == 2);
-        assert(rem.getScoresForQuizID(1L).size() == 1);
     }
     
 }   
