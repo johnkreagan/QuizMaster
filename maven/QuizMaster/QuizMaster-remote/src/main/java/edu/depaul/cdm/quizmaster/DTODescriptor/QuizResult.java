@@ -11,7 +11,7 @@ import java.io.Serializable;
  *
  * @author John
  */
-public class QuizResult implements Serializable {
+public class QuizResult implements Serializable, Comparable {
     
     public int score;
     
@@ -31,6 +31,13 @@ public class QuizResult implements Serializable {
 
     public void setDetail(String detail) {
         this.detail = detail;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        QuizResult c2 = (QuizResult)o;
+        return this.getScore() > c2.getScore() ? -1 : 1;
+        
     }
     
     

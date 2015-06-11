@@ -8,7 +8,11 @@ package edu.depaul.cdm.QuizMaster.service;
 import com.sun.enterprise.security.ee.auth.login.ProgrammaticLogin;
 import edu.depaul.cdm.QuizMaster.DTODescriptor.QuestionDescriptor;
 import edu.depaul.cdm.QuizMaster.DTODescriptor.QuizDescriptor;
+import edu.depaul.cdm.QuizMaster.DTODescriptor.QuizResult;
+import edu.depaul.cdm.QuizMaster.singleton.HighScoreSingletonBean;
+import edu.depaul.cdm.QuizMaster.singleton.HighScoreSingletonBeanRemote;
 import edu.depaul.cdm.QuizMasterRemote.QuizBeanRemote;
+import edu.depaul.cdm.QuizMasterRemote.QuizMatchRemote;
 import java.io.File;
 import java.util.List;
 import java.util.Properties;
@@ -34,7 +38,7 @@ import static org.junit.Assert.*;
  *
  * @author John
  */
-public class QuizBeanTest {
+public class QuizMasterIntegrationTest {
     
     public static interface Caller {
         public <V> V call(Callable<V> callable) throws Exception;
@@ -54,7 +58,7 @@ public class QuizBeanTest {
         }
     }
     
-    public QuizBeanTest() {
+    public QuizMasterIntegrationTest() {
     }
     //@EJB(name = "AdminBean")
     private Caller admin = new AdminBean();
@@ -63,6 +67,8 @@ public class QuizBeanTest {
     private static Context ctx;
     private QuizBeanRemote quizBean;
     private AdminTestBeanLocal adminBean;
+    private HighScoreSingletonBeanRemote highScore;
+    private QuizMatchRemote quizMatchBean;
     @BeforeClass
     public static void setUpClass() throws NamingException, Exception {
         
@@ -111,6 +117,8 @@ public class QuizBeanTest {
         ctx.rebind("inject", this);
         quizBean = (QuizBeanRemote)ctx.lookup("java:global/classes/QuizBean");
         adminBean = (AdminTestBeanLocal)ctx.lookup("java:global/classes/AdminTestBean");
+        highScore = (HighScoreSingletonBeanRemote)ctx.lookup("java:global/classes/HighScoreSingletonBean");
+        quizMatchBean = (QuizMatchRemote)ctx.lookup("java:global/classes/QuizMatchBean");
     }
     
     @After
@@ -240,6 +248,42 @@ public class QuizBeanTest {
         
         
         
+    }
+    
+    
+    @Test
+    public void TestSingletonHighScoreBean() {
+        
+        //repeat lookup and assert equal
+        HighScoreSingletonBeanRemote rem = null;
+        try {
+            
+            rem = (HighScoreSingletonBeanRemote)ctx.lookup("java:global/classes/HighScoreSingletonBean");
+        } catch(NamingException ne) {
+            
+        }
+        
+        
+        assert(highScore.equals(rem));
+        
+        QuizDescriptor qd = new QuizDescriptor();
+        qd.setId(1L);
+        qd.setName("QuizName");
+        
+        QuizResult qr1 = new QuizResult();
+        qr1.setScore(100);
+        qr1.setDetail("Detail");
+        
+        QuizResult qr2 = new QuizResult();
+        qr2.setScore(100);
+        qr2.setDetail("Detail");
+        
+        highScore.addHighScore(qd, qr1);
+        
+        assert(highScore.getScoresForQuizID(1L).size() == 1);
+        highScore.addHighScore(qd, qr2);
+        assert(highScore.getScoresForQuizID(1L).size() == 2);
+        assert(rem.getScoresForQuizID(1L).size() == 1);
     }
     
 }   
