@@ -5,6 +5,7 @@
  */
 package edu.depaul.cdm.QuizMasterRemote;
 
+import edu.depaul.cdm.QuizMaster.DTODescriptor.QuizResult;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.Remote;
@@ -21,6 +22,8 @@ public interface QuizMatchRemote extends Serializable {
     void AnswerQuestion(long quizMatchID, long questionID, long answerID);
     
     void AnswerQuestions(long quizMatchID, List<Long> answerIDs);
+    
+    QuizResult GradeQuizMatch(long quizMatchID);
     
     long GetScore(long quizMatchID);
     

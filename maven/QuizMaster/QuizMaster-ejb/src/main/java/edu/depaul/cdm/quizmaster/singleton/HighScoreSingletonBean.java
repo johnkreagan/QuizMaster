@@ -30,18 +30,18 @@ public class HighScoreSingletonBean implements HighScoreSingletonBeanRemote {
         results = new HashMap<>();
     }
     
-    private Map<QuizDescriptor, SortedSet<QuizResult>> results;
+    private Map<Long, SortedSet<QuizResult>> results;
     
     @Override
     public void addHighScore(QuizDescriptor qd, QuizResult result) {
         
-        if (results.containsKey(qd)) {
-            results.get(qd).add(result);
+        if (results.containsKey(qd.getId())) {
+            results.get(qd.getId()).add(result);
         } else {
             
             SortedSet<QuizResult> quizResults = new TreeSet<>();
             quizResults.add(result);
-            results.put(qd, quizResults);
+            results.put(qd.getId(), quizResults);
             
             
         }
@@ -54,9 +54,9 @@ public class HighScoreSingletonBean implements HighScoreSingletonBeanRemote {
     @Override
     public List<QuizResult> getScoresForQuizID(long ID) {
         
-        for(QuizDescriptor qd : results.keySet()) {
-            if(qd.getId() == ID) {
-                return new ArrayList<>(results.get(qd));
+        for(Long qdID : results.keySet()) {
+            if(qdID == ID) {
+                return new ArrayList<>(results.get(qdID));
             }
         }
         return null;

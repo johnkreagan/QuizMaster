@@ -5,6 +5,7 @@
  */
 package edu.depaul.cdm.QuizMaster.service;
 
+import edu.depaul.cdm.QuizMaster.DTODescriptor.QuizResult;
 import edu.depaul.cdm.QuizMaster.entities.Player;
 import edu.depaul.cdm.QuizMaster.entities.Quiz;
 import edu.depaul.cdm.QuizMaster.entities.QuizMatch;
@@ -17,6 +18,8 @@ import java.util.List;
 import java.util.Map;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -27,6 +30,7 @@ import javax.persistence.Query;
  */
 @Stateless
 @Remote
+@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class QuizMatchBean implements  Serializable, QuizMatchRemote  {
 
     @PersistenceContext(unitName = "QuizMaster-WEBPU")
@@ -101,7 +105,7 @@ public class QuizMatchBean implements  Serializable, QuizMatchRemote  {
     }
       
     
-    public void GradeQuizMatch(QuizMatch qm) {
+    private void scoreQuizMatch(QuizMatch qm) {
         
         Quiz quiz = qm.getQuiz();
         
@@ -121,4 +125,17 @@ public class QuizMatchBean implements  Serializable, QuizMatchRemote  {
     
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
+
+    @Override
+    public QuizResult GradeQuizMatch(long quizMatchID) {
+       
+        QuizMatch qm = this.entityManager.find(QuizMatch.class, quizMatchID);
+        
+        this.scoreQuizMatch(qm);
+        QuizResult res = new QuizResult();
+        res.setScore(qm.getScore());
+        res.setDetail("You scored " + qm.getScore()+".");
+        qm.setResult(res);
+        return qm.getResult();
+    }
 }

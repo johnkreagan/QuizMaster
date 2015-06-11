@@ -282,6 +282,35 @@ public class QuizMasterIntegrationTest {
         
         assert(highScore.getScoresForQuizID(1L).size() == 1);
         highScore.addHighScore(qd, qr2);
+        assert(highScore.getScoresForQuizID(1L).size() == 2);
+    }
+    
+    @Test
+    public void testQuizMatchCreate() {
+        long qmID = quizMatchBean.StartQuizMatch(1L, 1L);
+        assert(qmID > 0);
+    }
+    
+    @Test
+    public void testSubmitAnswer() {
+        
+        Long qdID = quizBean.CreateQuiz("Name 1", 1);
+        
+        Long question1ID = quizBean.AddQuestion(qdID, "Question 1");
+        Long correctAnswerID = quizBean.AddAnswer(question1ID, "Answer 1");
+        quizBean.AddAnswer(question1ID, "Answer 2");
+        quizBean.AddAnswer(question1ID, "Answer 3");
+        quizBean.AddAnswer(question1ID, "Answer 4");
+        
+        quizBean.SetCorrectAnswer(question1ID, correctAnswerID);
+        
+        QuizDescriptor qd = quizBean.GetQuiz(qdID);
+        long qmID = quizMatchBean.StartQuizMatch(qdID, 1L);
+        
+        quizMatchBean.AnswerQuestion(qmID, question1ID, correctAnswerID);
+        QuizResult res = quizMatchBean.GradeQuizMatch(qmID);
+        assert(res.getScore() == 1);
+        
     }
     
 }   
